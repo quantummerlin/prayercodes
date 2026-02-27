@@ -1,0 +1,91 @@
+{
+  "name": "Prayer Codes — Connect to the Kingdom of Heaven",
+  "short_name": "Prayer Codes",
+  "description": "Create structured biblical prayers, generate your unique Prayer Code through English Gematria, and amplify your connection to Heaven with the 37-73 Hz creation frequency.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050210",
+  "theme_color": "#8a6cdb",
+  "lang": "en",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    {
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Create Prayer",
+      "short_name": "Create",
+      "description": "Build a new structured prayer",
+      "url": "/?page=home",
+      "icons": [{"src": "icons/icon-96x96.png", "sizes": "96x96"}]
+    },
+    {
+      "name": "Prayer Journal",
+      "short_name": "Journal",
+      "description": "View your saved prayers",
+      "url": "/?page=journal",
+      "icons": [{"src": "icons/icon-96x96.png", "sizes": "96x96"}]
+    }
+  ]
+}

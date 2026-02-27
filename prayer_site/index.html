@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Prayer Codes — Connect to the Kingdom of Heaven</title>
+  <meta name="description" content="Create structured biblical prayers, generate your unique Prayer Code through English Gematria, and amplify your connection to Heaven with the 37-73 Hz creation frequency.">
+  <meta name="theme-color" content="#8a6cdb">
+  <meta name="color-scheme" content="dark">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Prayer Codes">
+  <meta name="application-name" content="Prayer Codes">
+  <meta name="msapplication-TileColor" content="#050210">
+  <meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Prayer Codes — Connect to the Kingdom of Heaven">
+  <meta property="og:description" content="Structured biblical prayers encoded through Gematria. Create your Prayer Code and amplify your faith.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://prayer.quantummerlin.com">
+  <meta property="og:image" content="https://prayer.quantummerlin.com/icons/icon-512x512.png">
+  <meta property="og:site_name" content="Prayer Codes">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prayer Codes — Connect to the Kingdom of Heaven">
+  <meta name="twitter:description" content="Structured biblical prayers encoded through Gematria. Create your Prayer Code and amplify your faith.">
+  <meta name="twitter:image" content="https://prayer.quantummerlin.com/icons/icon-512x512.png">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://prayer.quantummerlin.com">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ── Background Layers ── -->
+<div id="bg-nebula"></div>
+<div id="bg-stars"></div>
+<div id="bg-twinkle"></div>
+<div id="bg-geometry"></div>
+<div id="bg-rays"></div>
+<div id="bg-vignette"></div>
+<canvas id="particle-canvas"></canvas>
+
+<!-- ── App ── -->
+<div id="app">
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="logo-wrap">
+      <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="#F0D060"/>
+            <stop offset="100%" stop-color="#A07820" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F0D060"/>
+            <stop offset="50%" stop-color="#D4AF37"/>
+            <stop offset="100%" stop-color="#A07820"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="48" fill="none" stroke="url(#gold-grad)" stroke-width="1.5" opacity="0.6"/>
+        <circle cx="50" cy="50" r="38" fill="url(#glow)" opacity="0.15"/>
+        <!-- Praying hands simplified -->
+        <path d="M50 22 C46 28,42 36,42 44 C42 48,44 52,48 54 L48 68 C48 70,49 72,50 72 C51 72,52 70,52 68 L52 54 C56 52,58 48,58 44 C58 36,54 28,50 22Z" fill="url(#gold-grad)" opacity="0.9"/>
+        <path d="M44 44 C40 42,36 44,36 48 C36 52,40 56,44 54" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.7"/>
+        <path d="M56 44 C60 42,64 44,64 48 C64 52,60 56,56 54" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.7"/>
+        <!-- Cross -->
+        <line x1="50" y1="76" x2="50" y2="88" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+        <line x1="45" y1="80" x2="55" y2="80" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+        <!-- Rays -->
+        <line x1="50" y1="10" x2="50" y2="16" stroke="#F0D060" stroke-width="0.8" opacity="0.4"/>
+        <line x1="30" y1="18" x2="34" y2="22" stroke="#F0D060" stroke-width="0.8" opacity="0.3"/>
+        <line x1="70" y1="18" x2="66" y2="22" stroke="#F0D060" stroke-width="0.8" opacity="0.3"/>
+        <line x1="20" y1="35" x2="26" y2="37" stroke="#F0D060" stroke-width="0.8" opacity="0.2"/>
+        <line x1="80" y1="35" x2="74" y2="37" stroke="#F0D060" stroke-width="0.8" opacity="0.2"/>
+      </svg>
+      <h1 class="site-title">Prayer Codes</h1>
+      <p class="site-tagline">Connect to the Kingdom of Heaven</p>
+    </div>
+    <nav class="site-nav">
+      <button class="nav-btn active" data-page="home" onclick="navigate('home')">Create</button>
+      <button class="nav-btn" data-page="how" onclick="navigate('how')">How It Works</button>
+      <button class="nav-btn" data-page="scripture" onclick="navigate('scripture')">Scripture</button>
+      <button class="nav-btn" data-page="amplify" onclick="navigate('amplify')">Amplify</button>
+      <button class="nav-btn" data-page="journal" onclick="navigate('journal');renderJournal()">Journal</button>
+    </nav>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       PAGE: HOME — Prayer Builder
+       ════════════════════════════════════════ -->
+  <section id="page-home" class="page active">
+
+    <!-- Daily Scripture -->
+    <div class="daily-banner">
+      <div class="daily-label">Scripture of the Day</div>
+      <div class="daily-text" id="daily-text"></div>
+      <div class="daily-ref" id="daily-ref"></div>
+    </div>
+
+    <!-- Category Selection -->
+    <div class="card">
+      <h2 class="card-title">Build Your Prayer</h2>
+      <p class="card-sub">Select a prayer category to begin your journey</p>
+      <div class="cat-grid" id="cat-grid"></div>
+      <script>
+        // Render category cards with SVG icons (no emojis)
+        document.addEventListener('DOMContentLoaded', () => {
+          const grid = document.getElementById('cat-grid');
+          if (!grid) return;
+          CATEGORIES.forEach(cat => {
+            grid.innerHTML += `
+              <div class="cat-card" data-cat="${cat.id}" onclick="selectCategory('${cat.id}')">
+                <span class="cat-icon">${ICONS[cat.icon] || ''}</span>
+                <span class="cat-name">${cat.name}</span>
+                <span class="cat-verse">${cat.verse}</span>
+              </div>`;
+          });
+        });
+      </script>
+    </div>
+
+    <!-- Prayer Builder (hidden until category selected) -->
+    <div id="builder-section" class="card hidden">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progress-cat"></span>
+          <span class="current" id="progress-current"></span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="step-content"></div>
+      <div id="step-nav" class="step-nav"></div>
+    </div>
+
+    <!-- Prayer Preview (hidden until preview clicked) -->
+    <div id="preview-section" class="card hidden">
+      <h2 class="card-title">Your Prayer</h2>
+      <div class="divider"><span class="divider-icon">✝</span></div>
+      <div class="preview-box" id="preview-text"></div>
+      <div class="scripture mt-2">
+        Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O LORD, my strength, and my redeemer.
+        <span class="scripture-ref">— Psalm 19:14 (KJV)</span>
+      </div>
+      <div class="step-nav mt-2">
+        <button class="btn btn-outline" onclick="editPrayer()">Edit Prayer</button>
+        <button class="btn btn-gold" onclick="generatePrayerCode()">Generate Code</button>
+      </div>
+    </div>
+
+    <!-- Code Reveal (hidden until code generated) -->
+    <div id="code-section" class="card hidden">
+      <div class="code-reveal">
+        <div class="code-msg">Your Prayer Has Been Received</div>
+        <div class="code-number" id="code-number"></div>
+        <div class="code-gematria">Gematria value: <span id="code-gematria-val"></span></div>
+      </div>
+
+      <div class="divider"><span class="divider-icon">✝</span></div>
+
+      <h3 class="card-title mb-1">Amplify Your Prayer Code</h3>
+      <p class="card-sub">Share your code and pray with others to strengthen your connection to Heaven</p>
+
+      <div class="share-grid">
+        <button class="share-btn" onclick="copyCode()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Code
+        </button>
+        <button class="share-btn" onclick="copyPrayerMessage()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Copy Message
+        </button>
+        <button class="share-btn" onclick="shareWhatsApp()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </button>
+        <button class="share-btn" onclick="shareFacebook()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          Facebook
+        </button>
+        <button class="share-btn" onclick="shareTwitter()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          Twitter / X
+        </button>
+      </div>
+
+      <div class="divider mt-2"><span class="divider-icon">✝</span></div>
+
+      <div class="scripture">
+        For where two or three are gathered together in my name, there am I in the midst of them.
+        <span class="scripture-ref">— Matthew 18:20 (KJV)</span>
+      </div>
+
+      <div class="btn-center mt-2">
+        <button class="btn btn-gold" onclick="newPrayer()">Create New Prayer</button>
+      </div>
+    </div>
+
+    <!-- Guidance Card -->
+    <div class="card">
+      <h3 class="card-title">Prayer Guidance</h3>
+      <div class="scripture">
+        But when ye pray, use not vain repetitions, as the heathen do: for they think that they shall be heard for their much speaking.
+        <span class="scripture-ref">— Matthew 6:7 (KJV)</span>
+      </div>
+      <p class="text-center mt-1">Prayer is your direct connection to God. The structure helps guide your heart, but the sincerity of your faith is what matters most.</p>
+      <div class="scripture">
+        Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.
+        <span class="scripture-ref">— Hebrews 4:16 (KJV)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PAGE: HOW IT WORKS
+       ════════════════════════════════════════ -->
+  <section id="page-how" class="page">
+    <div class="card">
+      <h2 class="card-title">How Prayer Codes Work</h2>
+      <div class="scripture">
+        For where two or three are gathered together in my name, there am I in the midst of them.
+        <span class="scripture-ref">— Matthew 18:20 (KJV)</span>
+      </div>
+      <p>Prayer Codes combine the ancient wisdom of structured biblical prayer with the power of numerical encoding to create a unique spiritual practice that strengthens your connection to the Kingdom of Heaven.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">The Process</h2>
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title">Build Your Prayer</div>
+        <p>Select a prayer category based on your need and follow the biblical structure. Each step is guided by scripture from the King James Bible, helping you create a prayer that aligns with God's Word.</p>
+        <div class="scripture">
+          After this manner therefore pray ye: Our Father which art in heaven, Hallowed be thy name…
+          <span class="scripture-ref">— Matthew 6:9 (KJV)</span>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title">Generate Your Code</div>
+        <p>Your prayer is converted into a unique numerical code using <strong>English Gematria</strong> — an ancient practice where each letter has a numerical value (A=1, B=2, … Z=26). The total value of your prayer becomes your Prayer Code.</p>
+        <div class="scripture">
+          He telleth the number of the stars; he calleth them all by their names.
+          <span class="scripture-ref">— Psalm 147:4 (KJV)</span>
+        </div>
+        <p>Your code becomes a concentrated form of your prayer intention — a spiritual shorthand you can carry, meditate on, and share throughout the day.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title">Amplify Your Prayer</div>
+        <p>Strengthen your prayer by:</p>
+        <ul>
+          <li>Sharing your code with others who can pray it with you</li>
+          <li>Meditating on your code while listening to the 37-73 Hz creation frequency</li>
+          <li>Writing your code where you'll see it throughout the day</li>
+          <li>Pairing your code with specific scriptures</li>
+        </ul>
+        <div class="scripture">
+          Again I say unto you, That if two of you shall agree on earth as touching any thing that they shall ask, it shall be done for them of my Father which is in heaven.
+          <span class="scripture-ref">— Matthew 18:19 (KJV)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">The Creation Frequency</h2>
+      <p>The 37-73 Hz frequency range is known as the "Sound of Creation" — a vibrational pattern that resonates with the divine creative energy described in Genesis.</p>
+      <div class="scripture">
+        In the beginning God created the heaven and the earth. And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.
+        <span class="scripture-ref">— Genesis 1:1-2 (KJV)</span>
+      </div>
+      <p>When you meditate on your Prayer Code while listening to this frequency, you align your prayer with the creative power of God, strengthening your connection to Heaven.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Biblical Foundation</h2>
+
+      <h3 class="text-gold mb-1">Structured Prayer</h3>
+      <p>Jesus Himself provided a structure for prayer — the Lord's Prayer includes adoration, submission to God's will, petition, confession, and protection.</p>
+
+      <div class="divider"><span class="divider-icon">✝</span></div>
+
+      <h3 class="text-gold mb-1">The Power of Numbers</h3>
+      <div class="scripture">
+        Even the very hairs of your head are all numbered.
+        <span class="scripture-ref">— Luke 12:7 (KJV)</span>
+      </div>
+      <p>Throughout scripture, God works with numbers and counts even the smallest details of our lives.</p>
+
+      <div class="divider"><span class="divider-icon">✝</span></div>
+
+      <h3 class="text-gold mb-1">Collective Prayer</h3>
+      <p>When others pray your code with you, the power of collective prayer is activated. Scripture is clear — there is extraordinary power when believers agree together in prayer.</p>
+
+      <div class="divider"><span class="divider-icon">✝</span></div>
+
+      <h3 class="text-gold mb-1">Meditation on God's Word</h3>
+      <div class="scripture">
+        This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night.
+        <span class="scripture-ref">— Joshua 1:8 (KJV)</span>
+      </div>
+      <p>Your Prayer Code becomes a way to meditate on your prayer continuously throughout the day.</p>
+    </div>
+
+    <div class="card text-center">
+      <h3 class="card-title">Ready to Begin?</h3>
+      <p class="card-sub">Build your prayer, generate your code, and connect to Heaven.</p>
+      <div class="btn-center">
+        <button class="btn btn-gold" onclick="navigate('home')">Create Prayer Code</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PAGE: SCRIPTURE LIBRARY
+       ════════════════════════════════════════ -->
+  <section id="page-scripture" class="page">
+    <div class="card">
+      <h2 class="card-title">Scripture Library</h2>
+      <p class="card-sub">Find powerful verses to incorporate into your prayers</p>
+
+      <div class="search-wrap">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="text" class="search-input" id="scripture-search" placeholder="Search scripture…" oninput="searchScriptures()">
+      </div>
+
+      <div class="tag-wrap">
+        <button class="tag active" data-tag="all" onclick="filterScriptures('all')">All</button>
+        <button class="tag" data-tag="protection" onclick="filterScriptures('protection')">Protection</button>
+        <button class="tag" data-tag="healing" onclick="filterScriptures('healing')">Healing</button>
+        <button class="tag" data-tag="wisdom" onclick="filterScriptures('wisdom')">Wisdom</button>
+        <button class="tag" data-tag="thanksgiving" onclick="filterScriptures('thanksgiving')">Thanksgiving</button>
+        <button class="tag" data-tag="petition" onclick="filterScriptures('petition')">Petition</button>
+        <button class="tag" data-tag="faith" onclick="filterScriptures('faith')">Faith</button>
+        <button class="tag" data-tag="peace" onclick="filterScriptures('peace')">Peace</button>
+        <button class="tag" data-tag="justice" onclick="filterScriptures('justice')">Justice</button>
+        <button class="tag" data-tag="prayer" onclick="filterScriptures('prayer')">Prayer</button>
+      </div>
+
+      <div id="scripture-list"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">The Lord's Prayer</h2>
+      <div class="scripture">
+        Our Father which art in heaven, Hallowed be thy name. Thy kingdom come. Thy will be done in earth, as it is in heaven. Give us this day our daily bread. And forgive us our debts, as we forgive our debtors. And lead us not into temptation, but deliver us from evil: For thine is the kingdom, and the power, and the glory, for ever. Amen.
+        <span class="scripture-ref">— Matthew 6:9-13 (KJV)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PAGE: AMPLIFY
+       ════════════════════════════════════════ -->
+  <section id="page-amplify" class="page">
+    <div class="card">
+      <h2 class="card-title">Amplify Your Prayer Code</h2>
+      <div class="scripture">
+        Again I say unto you, That if two of you shall agree on earth as touching any thing that they shall ask, it shall be done for them of my Father which is in heaven.
+        <span class="scripture-ref">— Matthew 18:19 (KJV)</span>
+      </div>
+      <p>Your Prayer Code is a powerful spiritual tool. Here are ways to amplify its effectiveness and strengthen your connection to God.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">The Sound of Creation</h3>
+      <p class="card-sub">37-73 Hz Creation Frequency</p>
+
+      <div class="audio-wrap">
+        <div class="freq-title">Creation Frequency</div>
+        <div class="freq-sub">37 Hz + 73 Hz — The Sound of Creation</div>
+
+        <div class="waveform">
+          <div class="wave-bar" style="height:18px"></div>
+          <div class="wave-bar" style="height:28px"></div>
+          <div class="wave-bar" style="height:22px"></div>
+          <div class="wave-bar" style="height:34px"></div>
+          <div class="wave-bar" style="height:26px"></div>
+          <div class="wave-bar" style="height:38px"></div>
+          <div class="wave-bar" style="height:20px"></div>
+          <div class="wave-bar" style="height:32px"></div>
+          <div class="wave-bar" style="height:24px"></div>
+          <div class="wave-bar" style="height:36px"></div>
+          <div class="wave-bar" style="height:22px"></div>
+          <div class="wave-bar" style="height:30px"></div>
+          <div class="wave-bar" style="height:18px"></div>
+          <div class="wave-bar" style="height:28px"></div>
+          <div class="wave-bar" style="height:24px"></div>
+        </div>
+
+        <div class="audio-controls">
+          <span class="timer" id="timer">00:00</span>
+          <button class="play-btn" onclick="toggleAudio()">
+            <svg id="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+          <button class="loop-btn" id="loop-btn" onclick="toggleLoop()">Loop</button>
+        </div>
+
+        <div class="audio-track" onclick="seekAudio(event)">
+          <div class="audio-fill" id="audio-fill"></div>
+        </div>
+
+        <div class="audio-scripture">
+          "Be still, and know that I am God." — Psalm 46:10
+        </div>
+      </div>
+
+      <audio id="freq-audio" preload="auto">
+        <source src="audio/creation-frequency.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">How to Use the Frequency</h3>
+      <ol>
+        <li>Find a quiet place where you won't be disturbed</li>
+        <li>Play the Creation Frequency above</li>
+        <li>Focus on your Prayer Code — repeat it silently or aloud</li>
+        <li>Visualise your prayer being answered</li>
+        <li>Continue for 5-15 minutes daily</li>
+      </ol>
+      <div class="scripture mt-2">
+        In the beginning God created the heaven and the earth. And the Spirit of God moved upon the face of the waters.
+        <span class="scripture-ref">— Genesis 1:1-2 (KJV)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">Collective Prayer Power</h3>
+      <p>When others pray your code with you, the power of collective prayer is activated. Share your code with trusted friends, family, or prayer groups.</p>
+      <div class="scripture">
+        For where two or three are gathered together in my name, there am I in the midst of them.
+        <span class="scripture-ref">— Matthew 18:20 (KJV)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">Daily Practice</h3>
+      <div class="scripture">
+        Pray without ceasing.
+        <span class="scripture-ref">— 1 Thessalonians 5:17 (KJV)</span>
+      </div>
+      <p><strong class="text-gold">Morning:</strong> Begin each day meditating on your Prayer Code with the Creation Frequency.</p>
+      <p><strong class="text-gold">Throughout the day:</strong> Write your code where you'll see it — phone wallpaper, sticky notes, journal.</p>
+      <p><strong class="text-gold">Evening:</strong> Reflect on your code, express gratitude, and reaffirm your faith.</p>
+      <div class="scripture mt-2">
+        Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O LORD, my strength, and my redeemer.
+        <span class="scripture-ref">— Psalm 19:14 (KJV)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PAGE: JOURNAL
+       ════════════════════════════════════════ -->
+  <section id="page-journal" class="page">
+    <div class="card">
+      <h2 class="card-title">Prayer Journal</h2>
+      <p class="card-sub">Your saved prayers and codes — stored privately on your device</p>
+      <div id="journal-list"></div>
+    </div>
+    <div class="card text-center">
+      <button class="btn btn-outline" onclick="exportJournal()">Export Journal</button>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <p class="footer-text">Prayer Codes © 2025 — prayer.quantummerlin.com</p>
+    <p class="footer-scripture">"The effectual fervent prayer of a righteous man availeth much." — James 5:16</p>
+  </footer>
+
+</div><!-- /app -->
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── JS ── -->
+<script src="js/app.js"></script>
+
+<!-- ── Service Worker Registration ── -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('SW registered:', reg.scope))
+        .catch(err => console.log('SW registration failed:', err));
+    });
+  }
+</script>
+
+<!-- ── PWA Install Prompt ── -->
+<script>
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Show install button after a delay
+    setTimeout(() => {
+      const installBanner = document.createElement('div');
+      installBanner.id = 'install-banner';
+      installBanner.innerHTML = `
+        <div style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);
+          background:rgba(18,8,40,0.95);border:1px solid rgba(212,175,55,0.35);
+          color:#D4AF37;font-family:'Cinzel',serif;font-size:0.72rem;
+          letter-spacing:0.06em;padding:0.8rem 1.2rem;border-radius:28px;
+          box-shadow:0 8px 28px rgba(0,0,0,0.5),0 0 18px rgba(212,175,55,0.15);
+          z-index:9999;display:flex;align-items:center;gap:0.8rem;max-width:90vw;">
+          <span>Install Prayer Codes</span>
+          <button onclick="installPWA()" style="background:linear-gradient(135deg,#8B6914,#D4AF37);
+            color:#050210;border:none;border-radius:18px;padding:0.4rem 0.9rem;
+            font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;cursor:pointer;">
+            Install
+          </button>
+          <button onclick="this.parentElement.parentElement.remove()" style="background:none;
+            border:none;color:#9080B0;cursor:pointer;font-size:1rem;padding:0 0.3rem;">×</button>
+        </div>`;
+      document.body.appendChild(installBanner);
+    }, 5000);
+  });
+
+  async function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      const banner = document.getElementById('install-banner');
+      if (banner) banner.remove();
+    }
+    deferredPrompt = null;
+  }
+
+  window.addEventListener('appinstalled', () => {
+    const banner = document.getElementById('install-banner');
+    if (banner) banner.remove();
+    deferredPrompt = null;
+  });
+</script>
+</body>
+</html>

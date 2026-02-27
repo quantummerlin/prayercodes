@@ -1,0 +1,51 @@
+# Prayer Codes - Python / IDE
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.env
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+app.log
+
+# Temp files
+outputs/
+*.zip
+
+# Bot files (not part of the webapp)
+bot*.py
+prayer_codes_bot.py
+prayer_codes_step*.py
+premium_*.json
+premium_*.txt
+
+# Misc workspace artifacts
+,
+=
+await
+payload
+python
+self.do_request(
+*.jpeg
+*.png
+!prayer_site/**
+!prayer_code_app/**
+
+# Agent hooks
+.agent_hooks/
