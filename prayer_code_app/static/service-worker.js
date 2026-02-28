@@ -1,15 +1,17 @@
 // Prayer Codes Service Worker
 
-const CACHE_NAME = 'prayer-codes-v1';
+const CACHE_NAME = 'prayer-codes-v2';
 const urlsToCache = [
   '/',
+  '/how-it-works',
+  '/scripture',
+  '/amplify',
   '/static/css/style.css',
-  '/static/js/main.js',
   '/static/images/prayer-icon.svg',
+  '/static/images/prayer-icon.png',
   '/static/images/stars.png',
   '/static/images/twinkling.png',
-  '/static/images/sacred-geometry.svg',
-  '/static/audio/creation-frequency.mp3',
+  '/static/audio/creation-frequency.wav',
   '/static/icons/copy.svg',
   '/static/icons/facebook.svg',
   '/static/icons/twitter.svg'

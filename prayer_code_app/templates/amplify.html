@@ -24,7 +24,7 @@
   <div class="frequency-player">
     <div class="audio-player">
       <audio controls id="creation-frequency">
-        <source src="{{ url_for('static', filename='audio/creation-frequency.mp3') }}" type="audio/mpeg">
+        <source src="{{ url_for('static', filename='audio/creation-frequency.wav') }}" type="audio/wav">
         Your browser does not support the audio element.
       </audio>
     </div>
@@ -189,34 +189,35 @@
 
 {% block scripts %}
 <script>
+// Get last prayer code from localStorage
+function getLastCode() {
+  const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+  return history.length > 0 ? history[0].code : 'YOUR CODE';
+}
+
 // Copy Prayer Message
 document.getElementById('copy-code-text').addEventListener('click', function(e) {
   e.preventDefault();
-  
-  const shareText = `My Prayer Code: 123456\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com and join me in strengthening our prayers through the power of collective faith.`;
-  
+  const code = getLastCode();
+  const shareText = `My Prayer Code: ${code}\n\nPray this code with me to amplify our prayers.\nCreate yours at prayercodes.com \ud83d\ude4f`;
   navigator.clipboard.writeText(shareText);
-  showToast('Prayer message copied to clipboard');
+  showToast('Prayer message copied \ud83d\udccb');
 });
 
 // Share on Facebook
 document.getElementById('share-facebook').addEventListener('click', function(e) {
   e.preventDefault();
-  
-  const shareText = `My Prayer Code: 123456\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com`;
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
-  
-  window.open(shareUrl, '_blank');
+  const code = getLastCode();
+  const shareText = `My Prayer Code: ${code}\n\nPray this code with me!\nCreate yours at prayercodes.com`;
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://prayercodes.com')}&quote=${encodeURIComponent(shareText)}`, '_blank');
 });
 
 // Share on Twitter
 document.getElementById('share-twitter').addEventListener('click', function(e) {
   e.preventDefault();
-  
-  const shareText = `My Prayer Code: 123456\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com`;
-  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-  
-  window.open(shareUrl, '_blank');
+  const code = getLastCode();
+  const shareText = `My Prayer Code: ${code}\n\nPray this code with me!\nCreate yours at prayercodes.com`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank');
 });
 </script>
 
@@ -228,7 +229,8 @@ document.getElementById('share-twitter').addEventListener('click', function(e) {
 .amplify-method, .practice-method, .faith-method {
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(138, 108, 219, 0.2);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+  text-align: center;
 }
 
 .amplify-method:last-child, .practice-method:last-child, .faith-method:last-child {
@@ -244,6 +246,7 @@ document.getElementById('share-twitter').addEventListener('click', function(e) {
 
 .scripture-pairing {
   margin-top: 1rem;
+  text-align: center;
 }
 
 .scripture-pairing h4 {
@@ -254,6 +257,8 @@ document.getElementById('share-twitter').addEventListener('click', function(e) {
 .scripture-pairing ol {
   padding-left: 1.5rem;
   margin-bottom: 1rem;
+  text-align: left;
+  display: inline-block;
 }
 
 .scripture-pairing li {
@@ -261,11 +266,12 @@ document.getElementById('share-twitter').addEventListener('click', function(e) {
 }
 
 .example-box {
-  background-color: rgba(30, 25, 50, 0.5);
+  background-color: rgba(40, 33, 72, 0.5);
   border-radius: 10px;
   padding: 1rem;
   margin-top: 1rem;
-  border: 1px dashed rgba(138, 108, 219, 0.3);
+  border: 1px dashed rgba(167, 139, 250, 0.25);
+  text-align: center;
 }
 
 .example-box h4 {
@@ -276,6 +282,8 @@ document.getElementById('share-twitter').addEventListener('click', function(e) {
 .frequency-info ol {
   padding-left: 1.5rem;
   margin-top: 0.5rem;
+  text-align: left;
+  display: inline-block;
 }
 
 .frequency-info li {
