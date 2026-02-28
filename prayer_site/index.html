@@ -390,6 +390,7 @@
 
       <div class="tag-wrap">
         <button class="tag active" data-tag="all" onclick="filterScriptures('all')">All</button>
+        <button class="tag" data-tag="favorites" onclick="filterScriptures('favorites')">&#9733; Favorites</button>
         <button class="tag" data-tag="protection" onclick="filterScriptures('protection')">Protection</button>
         <button class="tag" data-tag="healing" onclick="filterScriptures('healing')">Healing</button>
         <button class="tag" data-tag="wisdom" onclick="filterScriptures('wisdom')">Wisdom</button>
@@ -499,6 +500,37 @@
     </div>
 
     <div class="card">
+      <h3 class="card-title">Prayer Meditation Timer</h3>
+      <p class="card-sub">Set a timer to focus your prayer meditation</p>
+
+      <div class="timer-circle" id="meditation-timer">
+        <svg viewBox="0 0 180 180">
+          <circle class="track" cx="90" cy="90" r="84" stroke-dasharray="528" stroke-dashoffset="0"/>
+          <circle class="progress" id="timer-progress" cx="90" cy="90" r="84" stroke-dasharray="528" stroke-dashoffset="528"/>
+        </svg>
+        <div class="timer-display" id="meditation-display">5:00</div>
+        <div class="timer-label" id="meditation-label">Select duration</div>
+      </div>
+
+      <div class="timer-presets">
+        <button class="timer-preset active" onclick="setMeditationTime(5)">5 min</button>
+        <button class="timer-preset" onclick="setMeditationTime(10)">10 min</button>
+        <button class="timer-preset" onclick="setMeditationTime(15)">15 min</button>
+        <button class="timer-preset" onclick="setMeditationTime(20)">20 min</button>
+        <button class="timer-preset" onclick="setMeditationTime(30)">30 min</button>
+      </div>
+
+      <div class="btn-center">
+        <button class="btn btn-gold" id="meditation-btn" onclick="toggleMeditation()">Begin Meditation</button>
+      </div>
+
+      <div class="scripture mt-2">
+        This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night.
+        <span class="scripture-ref">— Joshua 1:8 (KJV)</span>
+      </div>
+    </div>
+
+    <div class="card">
       <h3 class="card-title">Collective Prayer Power</h3>
       <p>When others pray your code with you, the power of collective prayer is activated. Share your code with trusted friends, family, or prayer groups.</p>
       <div class="scripture">
@@ -534,6 +566,7 @@
     </div>
     <div class="card text-center">
       <button class="btn btn-outline" onclick="exportJournal()">Export Journal</button>
+      <button class="btn btn-outline" onclick="clearAllJournal()" style="margin-left:0.5rem;border-color:rgba(180,80,80,0.3);color:#c06060;">Clear All</button>
     </div>
   </section>
 
@@ -577,6 +610,9 @@
   </footer>
 
 </div><!-- /app -->
+
+<!-- ── Back to Top ── -->
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">&uarr;</button>
 
 <!-- ── Toast ── -->
 <div class="toast" id="toast"></div>

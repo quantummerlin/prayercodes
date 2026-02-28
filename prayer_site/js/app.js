@@ -1115,9 +1115,24 @@ function seekAudio(e) {
 let timerStart = 0, timerInterval = null;
 
 /* ─────────────────────────────────────────────
-   11. SCRIPTURE LIBRARY
+   11. SCRIPTURE LIBRARY (with Favorites)
    ───────────────────────────────────────────── */
 let activeTag = 'all';
+
+function getFavorites() {
+  try { return JSON.parse(localStorage.getItem('scriptureFavorites') || '[]'); } catch { return []; }
+}
+function saveFavorites(favs) { localStorage.setItem('scriptureFavorites', JSON.stringify(favs)); }
+function isFavorite(ref) { return getFavorites().includes(ref); }
+function toggleFavorite(ref, event) {
+  if (event) event.stopPropagation();
+  let favs = getFavorites();
+  if (favs.includes(ref)) favs = favs.filter(f => f !== ref);
+  else favs.push(ref);
+  saveFavorites(favs);
+  renderScriptures(document.getElementById('scripture-search')?.value.trim().toLowerCase() || '');
+  toast(favs.includes(ref) ? 'Added to favorites' : 'Removed from favorites');
+}
 
 function filterScriptures(tag) {
   activeTag = tag;
@@ -1137,6 +1152,9 @@ function renderScriptures(query = '') {
 
   if (activeTag === 'all') {
     for (const cat in SCRIPTURE_DB) SCRIPTURE_DB[cat].forEach(s => results.push({ ...s, cat }));
+  } else if (activeTag === 'favorites') {
+    const favs = getFavorites();
+    for (const cat in SCRIPTURE_DB) SCRIPTURE_DB[cat].forEach(s => { if (favs.includes(s.ref)) results.push({ ...s, cat }); });
   } else if (SCRIPTURE_DB[activeTag]) {
     results = SCRIPTURE_DB[activeTag].map(s => ({ ...s, cat: activeTag }));
   }
@@ -1151,11 +1169,15 @@ function renderScriptures(query = '') {
   }
 
   results.forEach(s => {
+    const fav = isFavorite(s.ref);
     const div = document.createElement('div');
     div.className = 'scripture-card';
     div.onclick = () => { navigator.clipboard.writeText(`"${s.text}" — ${s.ref} (KJV)`); toast('Scripture copied'); };
     div.innerHTML = `
-      <div class="scripture-card-text">"${s.text}"</div>
+      <div class="scripture-card-top">
+        <div class="scripture-card-text">"${s.text}"</div>
+        <button class="fav-btn ${fav ? 'active' : ''}" onclick="toggleFavorite('${s.ref}', event)" aria-label="${fav ? 'Remove from favorites' : 'Add to favorites'}" title="${fav ? 'Remove from favorites' : 'Add to favorites'}">${fav ? '★' : '☆'}</button>
+      </div>
       <div class="scripture-card-ref">— ${s.ref} (KJV)</div>
       <div class="scripture-copy-hint">Tap to copy</div>
     `;
@@ -1227,8 +1249,9 @@ function copyJournalCode(idx) {
   if (journal[idx]) { navigator.clipboard.writeText(journal[idx].code); toast('Code copied'); }
 }
 function deleteJournalEntry(idx) {
+  if (!confirm('Remove this prayer from your journal?')) return;
   const journal = getJournal();
-  journal.splice(idx, 1); saveJournal(journal); renderJournal(); toast('Entry removed');
+  journal.splice(idx, 1); saveJournal(journal); renderJournal(); updatePrayerStats(); toast('Entry removed');
 }
 function exportJournal() {
   const journal = getJournal();
@@ -1241,6 +1264,13 @@ function exportJournal() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = 'prayer-journal.txt'; a.click();
   toast('Journal exported');
+}
+function clearAllJournal() {
+  const journal = getJournal();
+  if (journal.length === 0) { toast('Journal is already empty'); return; }
+  if (!confirm('Clear all ' + journal.length + ' entries from your prayer journal? This cannot be undone.')) return;
+  localStorage.removeItem('prayerJournal');
+  renderJournal(); updatePrayerStats(); toast('Journal cleared');
 }
 
 /* ─────────────────────────────────────────────
@@ -1389,12 +1419,91 @@ function updatePrayerStats() {
 }
 
 /* ─────────────────────────────────────────────
+   15b. MEDITATION TIMER
+   ───────────────────────────────────────────── */
+let meditationDuration = 300;
+let meditationRemaining = 300;
+let meditationInterval = null;
+let meditationRunning = false;
+
+function setMeditationTime(mins) {
+  if (meditationRunning) return;
+  meditationDuration = mins * 60;
+  meditationRemaining = meditationDuration;
+  document.querySelectorAll('.timer-preset').forEach(b => b.classList.toggle('active', parseInt(b.textContent) === mins));
+  updateMeditationDisplay();
+  const prog = document.getElementById('timer-progress');
+  if (prog) prog.style.strokeDashoffset = '528';
+}
+
+function updateMeditationDisplay() {
+  const display = document.getElementById('meditation-display');
+  if (!display) return;
+  const m = Math.floor(meditationRemaining / 60);
+  const s = meditationRemaining % 60;
+  display.textContent = m + ':' + String(s).padStart(2, '0');
+}
+
+function toggleMeditation() {
+  const btn = document.getElementById('meditation-btn');
+  const label = document.getElementById('meditation-label');
+  if (meditationRunning) {
+    clearInterval(meditationInterval);
+    meditationRunning = false;
+    if (btn) btn.textContent = 'Resume Meditation';
+    if (label) label.textContent = 'Paused';
+    return;
+  }
+  if (meditationRemaining <= 0) {
+    meditationRemaining = meditationDuration;
+    updateMeditationDisplay();
+    const prog = document.getElementById('timer-progress');
+    if (prog) prog.style.strokeDashoffset = '528';
+  }
+  meditationRunning = true;
+  if (btn) btn.textContent = 'Pause';
+  if (label) label.textContent = 'Meditating...';
+  meditationInterval = setInterval(() => {
+    meditationRemaining--;
+    updateMeditationDisplay();
+    const prog = document.getElementById('timer-progress');
+    if (prog) {
+      const pct = 1 - (meditationRemaining / meditationDuration);
+      prog.style.strokeDashoffset = String(528 - (528 * pct));
+    }
+    if (meditationRemaining <= 0) {
+      clearInterval(meditationInterval);
+      meditationRunning = false;
+      if (btn) btn.textContent = 'Begin Again';
+      if (label) label.textContent = 'Meditation complete';
+      toast('Meditation complete \u2014 go in peace', 4000);
+      launchConfetti();
+    }
+  }, 1000);
+}
+
+/* ─────────────────────────────────────────────
+   15c. BACK TO TOP
+   ───────────────────────────────────────────── */
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/* ─────────────────────────────────────────────
    16. INIT
    ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   setDailyScripture();
   initParticles();
   initAudio();
+  initBackToTop();
   updatePrayerStats();
   setTimeout(() => { renderScriptures(); renderJournal(); }, 100);
   navigate('home');

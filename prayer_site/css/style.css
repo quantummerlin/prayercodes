@@ -431,6 +431,58 @@ body{
 .scripture-copy-hint{font-size:0.6rem;color:var(--text-dim);text-align:right;margin-top:0.15rem;opacity:0;transition:var(--transition)}
 .scripture-card:hover .scripture-copy-hint{opacity:1}
 
+/* ── Scripture Favorite ── */
+.scripture-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem}
+.scripture-card-top .scripture-card-text{flex:1}
+.fav-btn{
+  background:none;border:none;cursor:pointer;padding:0.2rem;
+  color:var(--text-dim);transition:var(--transition);flex-shrink:0;
+  font-size:1.1rem;line-height:1;
+}
+.fav-btn:hover{color:var(--gold)}
+.fav-btn.active{color:var(--gold);text-shadow:0 0 8px rgba(212,175,55,0.5)}
+
+/* ── Back to Top ── */
+.back-to-top{
+  position:fixed;bottom:80px;right:18px;z-index:9000;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(18,8,40,0.9);border:1px solid rgba(212,175,55,0.3);
+  color:var(--gold);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:var(--transition);
+  box-shadow:0 4px 16px rgba(0,0,0,0.4);
+}
+.back-to-top.visible{opacity:1;pointer-events:auto}
+.back-to-top:hover{background:rgba(212,175,55,0.15);border-color:var(--gold)}
+
+/* ── Meditation Timer ── */
+.timer-circle{
+  width:180px;height:180px;border-radius:50%;margin:1.5rem auto;
+  border:3px solid rgba(212,175,55,0.2);position:relative;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+}
+.timer-circle svg{position:absolute;top:0;left:0;width:100%;height:100%;transform:rotate(-90deg)}
+.timer-circle circle{fill:none;stroke-width:3;stroke-linecap:round}
+.timer-circle .track{stroke:rgba(212,175,55,0.1)}
+.timer-circle .progress{stroke:var(--gold);transition:stroke-dashoffset 1s linear}
+.timer-display{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold);z-index:1}
+.timer-label{font-size:0.7rem;color:var(--text-dim);z-index:1;margin-top:0.2rem}
+.timer-presets{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0}
+.timer-preset{
+  background:rgba(5,2,16,0.5);border:1px solid rgba(212,175,55,0.15);
+  color:var(--text-dim);padding:0.4rem 0.8rem;border-radius:20px;
+  font-family:'Cinzel',serif;font-size:0.7rem;cursor:pointer;transition:var(--transition);
+}
+.timer-preset:hover,.timer-preset.active{color:var(--gold);border-color:var(--gold-dim)}
+
+/* ── Journal Search ── */
+.journal-search-wrap{margin-bottom:1rem}
+.journal-stats{
+  display:flex;gap:1rem;justify-content:center;margin-bottom:1rem;
+  font-size:0.72rem;color:var(--text-dim);font-family:'Cinzel',serif;
+}
+.journal-stats span{color:var(--gold);font-weight:600}
+
 /* ── How It Works ── */
 .how-step{margin-bottom:1.8rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(212,175,55,0.1)}
 .how-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
