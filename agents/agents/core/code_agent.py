@@ -1,7 +1,7 @@
 """
 Code Agent — The Encoder
 Generates gematria codes from prayer text using Simple English Gematria.
-A=1, B=2, ... Z=26. Digits add face value. Code = total mod 1000000, zero-padded to 6 digits.
+A=1, B=2, ... Z=26. Digits add face value. Code = total mod 1000000.
 """
 
 import json
@@ -28,7 +28,7 @@ def simple_english_gematria(text):
 def generate_code(text, length=6):
     """Generate a prayer code from text using gematria."""
     total = simple_english_gematria(text)
-    code = str(total % (10 ** length)).zfill(length)
+    code = str(total % (10 ** length))
     return code, total
 
 

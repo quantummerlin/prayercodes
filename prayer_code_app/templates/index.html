@@ -345,8 +345,8 @@ function generatePrayerCode(text, length = 6) {
     }
   }
   
-  // Format as a 6-digit code
-  return String(total % (10 ** length)).padStart(length, '0');
+  // Return as a whole number (no leading zeros)
+  return String(total % (10 ** length));
 }
 
 // Copy Code button click

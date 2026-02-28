@@ -4,9 +4,17 @@ import json
 import random
 from datetime import datetime
 import os
+import time
 
 app = Flask(__name__)
 app.secret_key = 'prayer_codes_secret_key'
+
+# Cache bust value — changes on each app restart
+CACHE_BUST = str(int(time.time()))
+
+@app.context_processor
+def inject_cache_bust():
+    return {'cache_bust': CACHE_BUST}
 
 # Simple in-memory storage for codes
 # In a real implementation, you would use a database
@@ -27,7 +35,7 @@ def gematria(text):
 def generate_prayer_code(prayer_text, length=6):
     """Generate a numeric code from prayer text."""
     total = gematria(prayer_text)
-    code = str(total % (10 ** length)).zfill(length)
+    code = str(total % (10 ** length))
     return code
 
 # Format prayer as poem (each sentence on a new line)
