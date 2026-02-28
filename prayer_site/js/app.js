@@ -439,7 +439,6 @@ function renderStep() {
   const cc = document.getElementById('char-count');
   input.addEventListener('input', () => { cc.textContent = input.value.length + ' characters'; });
   cc.textContent = input.value.length + ' characters';
-  input.focus();
 
   const nav = document.getElementById('step-nav');
   const isFirst = state.currentStep === 0;
@@ -466,7 +465,10 @@ function nextStep() {
   if (state.currentStep < state.selectedCategory.steps.length - 1) {
     state.currentStep++;
     renderStep();
-    document.getElementById('builder-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      dismissKeyboard();
+      document.getElementById('builder-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   }
 }
 
@@ -501,9 +503,14 @@ function previewPrayer() {
   if (!allFilled) { toast('Please complete all sections of your prayer'); return; }
 
   const lines = cat.steps.map(s => state.stepData[s.key].trim());
-  document.getElementById('preview-text').textContent = lines.join('\n\n');
+  const previewEl = document.getElementById('preview-text');
+  previewEl.textContent = lines.join('\n\n');
+  previewEl.setAttribute('contenteditable', 'true');
   document.getElementById('preview-section').classList.remove('hidden');
-  document.getElementById('preview-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => {
+    dismissKeyboard();
+    document.getElementById('preview-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
 }
 
 function editPrayer() {
@@ -514,7 +521,9 @@ function editPrayer() {
 
 function generatePrayerCode() {
   const cat = state.selectedCategory;
-  const fullPrayer = cat.steps.map(s => state.stepData[s.key].trim()).join(' ');
+  // Read from the editable preview (user may have edited it)
+  const previewEl = document.getElementById('preview-text');
+  const fullPrayer = previewEl.innerText.trim();
   const finalCode = generateCode(fullPrayer);
   state.generatedCode = finalCode;
 
