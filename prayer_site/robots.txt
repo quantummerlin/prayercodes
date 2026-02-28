@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Sitemap: https://prayer.quantummerlin.com/sitemap.xml
+
+# Prayer Codes — prayer.quantummerlin.com

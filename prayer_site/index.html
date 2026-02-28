@@ -40,10 +40,36 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://prayer.quantummerlin.com">
 
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Prayer Codes",
+    "url": "https://prayer.quantummerlin.com",
+    "description": "Create structured biblical prayers, generate your unique Prayer Code through English Gematria, and amplify your connection to Heaven.",
+    "applicationCategory": "ReligiousApp",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Quantum Merlin",
+      "url": "https://quantummerlin.com"
+    }
+  }
+  </script>
+
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+<!-- ── Skip to Content (Accessibility) ── -->
+<a href="#page-home" class="skip-link" style="position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:#D4AF37;color:#050210;padding:0.5rem 1.2rem;border-radius:0 0 8px 8px;font-family:'Cinzel',serif;font-size:0.8rem;z-index:10000;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-100%'">Skip to Content</a>
 
 <!-- ── Background Layers ── -->
 <div id="bg-nebula"></div>
@@ -58,7 +84,7 @@
 <div id="app">
 
   <!-- ── Header ── -->
-  <header class="site-header">
+  <header class="site-header" role="banner">
     <div class="logo-wrap">
       <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -91,19 +117,20 @@
       <h1 class="site-title">Prayer Codes</h1>
       <p class="site-tagline">Connect to the Kingdom of Heaven</p>
     </div>
-    <nav class="site-nav">
-      <button class="nav-btn active" data-page="home" onclick="navigate('home')">Create</button>
-      <button class="nav-btn" data-page="how" onclick="navigate('how')">How It Works</button>
-      <button class="nav-btn" data-page="scripture" onclick="navigate('scripture')">Scripture</button>
-      <button class="nav-btn" data-page="amplify" onclick="navigate('amplify')">Amplify</button>
-      <button class="nav-btn" data-page="journal" onclick="navigate('journal');renderJournal()">Journal</button>
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      <button class="nav-btn active" data-page="home" onclick="navigate('home')" aria-label="Create a prayer">Create</button>
+      <button class="nav-btn" data-page="how" onclick="navigate('how')" aria-label="How it works">How It Works</button>
+      <button class="nav-btn" data-page="scripture" onclick="navigate('scripture')" aria-label="Scripture library">Scripture</button>
+      <button class="nav-btn" data-page="amplify" onclick="navigate('amplify')" aria-label="Amplify your prayer">Amplify</button>
+      <button class="nav-btn" data-page="journal" onclick="navigate('journal');renderJournal()" aria-label="Prayer journal">Journal</button>
     </nav>
   </header>
 
   <!-- ════════════════════════════════════════
        PAGE: HOME — Prayer Builder
        ════════════════════════════════════════ -->
-  <section id="page-home" class="page active">
+  <main role="main">
+  <section id="page-home" class="page active" aria-label="Prayer Builder">
 
     <!-- Daily Scripture -->
     <div class="daily-banner">
@@ -177,12 +204,12 @@
       <p class="card-sub">Share your code and pray with others to strengthen your connection to Heaven</p>
 
       <div class="share-grid">
-        <button class="share-btn" onclick="copyCode()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        <button class="share-btn" onclick="copyCode()" aria-label="Copy prayer code">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           Copy Code
         </button>
-        <button class="share-btn" onclick="copyPrayerMessage()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <button class="share-btn" onclick="copyPrayerMessage()" aria-label="Copy prayer message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           Copy Message
         </button>
         <button class="share-btn" onclick="shareWhatsApp()">
@@ -229,7 +256,7 @@
   <!-- ════════════════════════════════════════
        PAGE: HOW IT WORKS
        ════════════════════════════════════════ -->
-  <section id="page-how" class="page">
+  <section id="page-how" class="page" aria-label="How It Works">
     <div class="card">
       <h2 class="card-title">How Prayer Codes Work</h2>
       <div class="scripture">
@@ -329,14 +356,14 @@
   <!-- ════════════════════════════════════════
        PAGE: SCRIPTURE LIBRARY
        ════════════════════════════════════════ -->
-  <section id="page-scripture" class="page">
+  <section id="page-scripture" class="page" aria-label="Scripture Library">
     <div class="card">
       <h2 class="card-title">Scripture Library</h2>
       <p class="card-sub">Find powerful verses to incorporate into your prayers</p>
 
       <div class="search-wrap">
         <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input type="text" class="search-input" id="scripture-search" placeholder="Search scripture…" oninput="searchScriptures()">
+        <input type="text" class="search-input" id="scripture-search" placeholder="Search scripture…" oninput="searchScriptures()" aria-label="Search scriptures">
       </div>
 
       <div class="tag-wrap">
@@ -376,7 +403,7 @@
   <!-- ════════════════════════════════════════
        PAGE: AMPLIFY
        ════════════════════════════════════════ -->
-  <section id="page-amplify" class="page">
+  <section id="page-amplify" class="page" aria-label="Amplify Your Prayer">
     <div class="card">
       <h2 class="card-title">Amplify Your Prayer Code</h2>
       <div class="scripture">
@@ -429,7 +456,7 @@
         </div>
       </div>
 
-      <audio id="freq-audio" preload="auto">
+      <audio id="freq-audio" preload="auto" aria-label="37-73 Hz Creation Frequency audio">
         <source src="audio/creation-frequency.mp3" type="audio/mpeg">
       </audio>
     </div>
@@ -477,7 +504,7 @@
   <!-- ════════════════════════════════════════
        PAGE: JOURNAL
        ════════════════════════════════════════ -->
-  <section id="page-journal" class="page">
+  <section id="page-journal" class="page" aria-label="Prayer Journal">
     <div class="card">
       <h2 class="card-title">Prayer Journal</h2>
       <p class="card-sub">Your saved prayers and codes — stored privately on your device</p>
@@ -489,7 +516,7 @@
   </section>
 
   <!-- ── Privacy Policy ── -->
-  <section id="page-privacy" class="page">
+  <section id="page-privacy" class="page" aria-label="Privacy Policy">
     <div class="card">
       <h2 class="card-title">Privacy Policy</h2>
       <p class="card-sub">Last updated: February 2026</p>
@@ -518,9 +545,11 @@
     </div>
   </section>
 
+  </main>
+
   <!-- ── Footer ── -->
-  <footer class="site-footer">
-    <p class="footer-text">Prayer Codes &copy; 2025 &mdash; prayer.quantummerlin.com</p>
+  <footer class="site-footer" role="contentinfo">
+    <p class="footer-text">Prayer Codes &copy; 2025&ndash;2026 &mdash; prayer.quantummerlin.com</p>
     <p class="footer-scripture">"The effectual fervent prayer of a righteous man availeth much." &mdash; James 5:16</p>
     <p class="footer-text" style="margin-top:0.5rem;font-size:0.65rem;"><a href="#" onclick="event.preventDefault();navigate('privacy')" style="color:var(--text-dim);text-decoration:none;">Privacy Policy</a></p>
   </footer>
