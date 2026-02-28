@@ -1042,6 +1042,15 @@ function shareTwitter() {
   window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg), '_blank');
 }
 
+function nativeShare() {
+  if (!navigator.share || !state.generatedCode) return;
+  navigator.share({
+    title: 'My Prayer Code: ' + state.generatedCode,
+    text: `My Prayer Code: ${state.generatedCode}\n\nStructured biblical prayer encoded through English Gematria. Pray this code with me to amplify our connection to Heaven.`,
+    url: 'https://prayer.quantummerlin.com'
+  }).catch(() => {});
+}
+
 /* ─────────────────────────────────────────────
    10. AUDIO PLAYER
    ───────────────────────────────────────────── */
@@ -1363,12 +1372,43 @@ function newPrayer() {
 }
 
 /* ─────────────────────────────────────────────
-   15. INIT
+   15. PRAYER STATS
+   ───────────────────────────────────────────── */
+function updatePrayerStats() {
+  const prayers = parseInt(localStorage.getItem('totalPrayers') || '0');
+  const streakData = JSON.parse(localStorage.getItem('prayerStreak') || '{"count":0}');
+  const journal = JSON.parse(localStorage.getItem('prayerJournal') || '[]');
+  const statsEl = document.getElementById('prayer-stats');
+  if (!statsEl) return;
+  if (prayers > 0) {
+    statsEl.style.display = 'block';
+    document.getElementById('stat-prayers').textContent = prayers;
+    document.getElementById('stat-streak').textContent = streakData.count || 0;
+    document.getElementById('stat-journal').textContent = journal.length;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   16. INIT
    ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   setDailyScripture();
   initParticles();
   initAudio();
+  updatePrayerStats();
   setTimeout(() => { renderScriptures(); renderJournal(); }, 100);
   navigate('home');
+
+  // Show native share button on supported devices
+  if (navigator.share) {
+    const shareGrid = document.querySelector('.share-grid');
+    if (shareGrid) {
+      const nativeBtn = document.createElement('button');
+      nativeBtn.className = 'share-btn';
+      nativeBtn.setAttribute('aria-label', 'Share via device');
+      nativeBtn.onclick = nativeShare;
+      nativeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share';
+      shareGrid.insertBefore(nativeBtn, shareGrid.firstChild);
+    }
+  }
 });

@@ -63,6 +63,10 @@
   }
   </script>
 
+  <!-- Font Preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -70,6 +74,15 @@
 
 <!-- ── Skip to Content (Accessibility) ── -->
 <a href="#page-home" class="skip-link" style="position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:#D4AF37;color:#050210;padding:0.5rem 1.2rem;border-radius:0 0 8px 8px;font-family:'Cinzel',serif;font-size:0.8rem;z-index:10000;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-100%'">Skip to Content</a>
+
+<!-- ── Noscript Fallback ── -->
+<noscript>
+  <div style="background:#050210;color:#D4AF37;text-align:center;padding:3rem 1.5rem;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Georgia,serif;">
+    <h1 style="font-size:1.5rem;margin-bottom:1rem;">Prayer Codes</h1>
+    <p style="color:#9080B0;max-width:400px;line-height:1.7;">Prayer Codes requires JavaScript to create your personalized prayer experience. Please enable JavaScript in your browser settings and reload the page.</p>
+    <p style="margin-top:1.5rem;font-style:italic;opacity:0.7;">&ldquo;Ask, and it shall be given you; seek, and ye shall find.&rdquo; &mdash; Matthew 7:7</p>
+  </div>
+</noscript>
 
 <!-- ── Background Layers ── -->
 <div id="bg-nebula"></div>
@@ -131,6 +144,15 @@
        ════════════════════════════════════════ -->
   <main role="main">
   <section id="page-home" class="page active" aria-label="Prayer Builder">
+
+    <!-- Prayer Stats Banner -->
+    <div id="prayer-stats" class="daily-banner" style="display:none;margin-bottom:0.5rem;">
+      <div style="display:flex;justify-content:center;gap:2rem;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.05em;color:var(--text-dim);">
+        <div style="text-align:center;"><span id="stat-prayers" style="display:block;font-size:1.3rem;color:var(--gold);font-weight:600;">0</span>Prayers</div>
+        <div style="text-align:center;"><span id="stat-streak" style="display:block;font-size:1.3rem;color:var(--gold);font-weight:600;">0</span>Day Streak</div>
+        <div style="text-align:center;"><span id="stat-journal" style="display:block;font-size:1.3rem;color:var(--gold);font-weight:600;">0</span>Saved</div>
+      </div>
+    </div>
 
     <!-- Daily Scripture -->
     <div class="daily-banner">

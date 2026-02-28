@@ -1,10 +1,11 @@
 // Prayer Codes PWA Service Worker v2.0
 // Optimised for offline-first with network-first for HTML
 
-const CACHE_NAME = 'prayer-codes-v3';
+const CACHE_NAME = 'prayer-codes-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/404.html',
   '/css/style.css',
   '/js/app.js',
   '/manifest.json',
