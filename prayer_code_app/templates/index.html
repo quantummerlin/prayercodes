@@ -73,17 +73,23 @@
     <p class="text-center">Share your code and listen to the creation frequency (37-73 Hz) to strengthen your connection to Heaven.</p>
     
     <div class="social-share">
+      <a href="#" class="social-button share-primary" id="native-share">
+        <span>📤 Share Prayer Code</span>
+      </a>
+      <a href="#" class="social-button" id="share-whatsapp">
+        <span>💬 WhatsApp</span>
+      </a>
       <a href="#" class="social-button" id="copy-code">
         <img src="{{ url_for('static', filename='icons/copy.svg') }}" alt="Copy" class="social-icon">
         <span>Copy Code</span>
       </a>
       <a href="#" class="social-button" id="share-facebook">
         <img src="{{ url_for('static', filename='icons/facebook.svg') }}" alt="Facebook" class="social-icon">
-        <span>Share on Facebook</span>
+        <span>Facebook</span>
       </a>
       <a href="#" class="social-button" id="share-twitter">
         <img src="{{ url_for('static', filename='icons/twitter.svg') }}" alt="Twitter" class="social-icon">
-        <span>Share on Twitter</span>
+        <span>Twitter</span>
       </a>
     </div>
     
@@ -125,6 +131,12 @@
     "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need."
     <div class="scripture-reference">Hebrews 4:16 (KJV)</div>
   </div>
+</div>
+
+<div id="prayer-history-card" class="card">
+  <h2 class="text-center">My Prayer Journal</h2>
+  <p class="text-center" id="history-empty">Your saved prayers will appear here</p>
+  <div id="prayer-history-list"></div>
 </div>
 {% endblock %}
 
@@ -188,37 +200,204 @@ const categoryFlows = {
 let currentCategory = '';
 let prayerData = {};
 
-// Dismiss keyboard helper — blur any focused input so the keyboard stays hidden
+// ═══════════════════════════════════════════════
+// UTILITY FUNCTIONS
+// ═══════════════════════════════════════════════
+
+// Dismiss keyboard — blur active input so keyboard stays hidden
 function dismissKeyboard() {
   if (document.activeElement && document.activeElement !== document.body) {
     document.activeElement.blur();
   }
 }
 
-// When a category card is clicked
+// Confetti burst — canvas-based particle effect
+function launchConfetti() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#a78bfa','#fcd34d','#7de8b8','#ddd6fe','#bae6fd','#fff'];
+  const particles = Array.from({length: 100}, () => ({
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    vx: (Math.random() - 0.5) * 14,
+    vy: (Math.random() - 0.5) * 14 - 5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    size: Math.random() * 7 + 2,
+    life: 1
+  }));
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life -= 0.012;
+      if (p.life > 0) {
+        alive = true;
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    if (alive) requestAnimationFrame(animate);
+    else canvas.remove();
+  }
+  animate();
+}
+
+// Typewriter effect — types text character by character
+function typewriterEffect(element, text, speed = 20) {
+  element.textContent = '';
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+
+// Update progress bar as user fills in prayer steps
+function updateProgress() {
+  const textareas = document.querySelectorAll('#prayer-steps-container textarea');
+  const filled = [...textareas].filter(t => t.value.trim().length > 0).length;
+  const pct = (filled / textareas.length) * 100;
+  const bar = document.getElementById('prayer-progress');
+  if (bar) bar.style.width = pct + '%';
+  textareas.forEach(t => {
+    const step = t.closest('.prayer-step');
+    if (step) step.classList.toggle('completed', t.value.trim().length > 0);
+  });
+}
+
+// Generate a prayer code using English gematria (A=1, B=2, etc.)
+function generatePrayerCode(text, length = 6) {
+  let total = 0;
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i].toUpperCase();
+    if (/[A-Z]/.test(char)) {
+      total += char.charCodeAt(0) - 64;
+    } else if (/[0-9]/.test(char)) {
+      total += parseInt(char);
+    }
+  }
+  return String(total % (10 ** length));
+}
+
+// Build the prayer text from the collected data
+function buildPrayerText(data) {
+  return Object.values(data).join(' ');
+}
+
+// ═══════════════════════════════════════════════
+// RETENTION: Prayer History, Streaks, Milestones
+// ═══════════════════════════════════════════════
+
+function savePrayerToHistory(code, prayerText, category) {
+  const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+  history.unshift({
+    code, prayer: prayerText, category,
+    date: new Date().toISOString(), id: Date.now()
+  });
+  if (history.length > 50) history.pop();
+  localStorage.setItem('prayerHistory', JSON.stringify(history));
+  renderPrayerHistory();
+}
+
+function renderPrayerHistory() {
+  const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+  const list = document.getElementById('prayer-history-list');
+  const empty = document.getElementById('history-empty');
+  if (!list) return;
+  if (!history.length) {
+    if (empty) empty.style.display = 'block';
+    list.innerHTML = '';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  list.innerHTML = history.slice(0, 10).map(h => `
+    <div class="prayer-history-item">
+      <div class="history-header">
+        <span class="history-code">${h.code}</span>
+        <span class="history-date">${new Date(h.date).toLocaleDateString()}</span>
+      </div>
+      <div class="history-preview">${h.prayer.substring(0, 120)}${h.prayer.length > 120 ? '...' : ''}</div>
+    </div>
+  `).join('');
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const data = JSON.parse(localStorage.getItem('prayerStreak') || '{"count":0,"lastDate":""}');
+  const lastDate = data.lastDate ? new Date(data.lastDate).toDateString() : '';
+  if (lastDate === today) return data.count;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (lastDate === yesterday.toDateString()) {
+    data.count++;
+  } else {
+    data.count = 1;
+  }
+  data.lastDate = today;
+  localStorage.setItem('prayerStreak', JSON.stringify(data));
+  return data.count;
+}
+
+function renderStreak() {
+  const data = JSON.parse(localStorage.getItem('prayerStreak') || '{"count":0,"lastDate":""}');
+  const count = data.count || 0;
+  let badge = document.getElementById('streak-badge');
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.id = 'streak-badge';
+    badge.className = 'streak-badge';
+    const logo = document.querySelector('.logo-container');
+    if (logo) logo.appendChild(badge);
+  }
+  badge.innerHTML = count > 0 ? `&#128293; ${count}-day prayer streak` : '';
+}
+
+function incrementPrayerCount() {
+  let count = parseInt(localStorage.getItem('totalPrayers') || '0') + 1;
+  localStorage.setItem('totalPrayers', String(count));
+  const milestones = [1, 5, 10, 25, 50, 100, 250, 500];
+  if (milestones.includes(count)) {
+    setTimeout(() => {
+      showToast(`&#127881; Milestone: ${count} prayers created!`, 5000);
+      launchConfetti();
+    }, 2000);
+  }
+  return count;
+}
+
+// ═══════════════════════════════════════════════
+// SHARE HELPERS
+// ═══════════════════════════════════════════════
+
+function getShareText(code) {
+  return `My Prayer Code: ${code}\n\nPray this code with me to amplify our prayers.\nCreate yours at prayercodes.com &#128591;`;
+}
+
+// ═══════════════════════════════════════════════
+// EVENT HANDLERS
+// ═══════════════════════════════════════════════
+
+// Category card click
 document.querySelectorAll('.category-card').forEach(card => {
   card.addEventListener('click', function() {
     dismissKeyboard();
-
-    // Remove selected class from all cards
     document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
-    
-    // Add selected class to clicked card
     this.classList.add('selected');
-    
-    // Get the category
     currentCategory = this.getAttribute('data-category');
-    
-    // Reset prayer data
     prayerData = {};
-    
-    // Build the prayer steps
     buildPrayerSteps(currentCategory);
-    
-    // Show the prayer builder
     document.getElementById('prayer-builder').style.display = 'block';
-    
-    // Scroll to prayer builder — delay so DOM settles without triggering keyboard
     setTimeout(() => {
       dismissKeyboard();
       document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
@@ -226,45 +405,44 @@ document.querySelectorAll('.category-card').forEach(card => {
   });
 });
 
-// Build the prayer steps based on the selected category
+// Build the prayer steps with progress bar
 function buildPrayerSteps(category) {
   const stepsContainer = document.getElementById('prayer-steps-container');
-  stepsContainer.innerHTML = ''; // Clear previous steps
-  
   const steps = categoryFlows[category];
-  
+
+  // Progress bar + steps
+  let html = '<div class="progress-bar-container"><div class="progress-bar-fill" id="prayer-progress"></div></div>';
   steps.forEach((step, index) => {
-    const stepElement = document.createElement('div');
-    stepElement.className = 'prayer-step';
-    stepElement.innerHTML = `
-      <div class="prayer-step-header">
-        <div class="prayer-step-icon">${step.prompt.split(' ')[0]}</div>
-        <div class="prayer-step-title">${step.prompt}</div>
-      </div>
-      <div class="prayer-step-guidance">${step.guidance}</div>
-      <div class="scripture-quote">
-        ${step.scripture}
-      </div>
-      <div class="form-group">
-        <textarea id="step-${index}" data-key="${step.key}" rows="3" placeholder="${step.example}"></textarea>
+    html += `
+      <div class="prayer-step">
+        <div class="prayer-step-header">
+          <div class="prayer-step-icon">${step.prompt.split(' ')[0]}</div>
+          <div class="prayer-step-title">${step.prompt}</div>
+        </div>
+        <div class="prayer-step-guidance">${step.guidance}</div>
+        <div class="scripture-quote">${step.scripture}</div>
+        <div class="form-group">
+          <textarea id="step-${index}" data-key="${step.key}" rows="3" placeholder="${step.example}"></textarea>
+        </div>
       </div>
     `;
-    stepsContainer.appendChild(stepElement);
+  });
+  stepsContainer.innerHTML = html;
+
+  // Attach progress listeners
+  document.querySelectorAll('#prayer-steps-container textarea').forEach(ta => {
+    ta.addEventListener('input', updateProgress);
   });
 }
 
-// Preview Prayer button click
+// Preview Prayer
 document.getElementById('preview-prayer').addEventListener('click', function() {
   dismissKeyboard();
-
-  // Collect all prayer step inputs
   const textareas = document.querySelectorAll('#prayer-steps-container textarea');
   let allFilled = true;
-  
   textareas.forEach(textarea => {
     const key = textarea.getAttribute('data-key');
     const value = textarea.value.trim();
-    
     if (!value) {
       allFilled = false;
       textarea.classList.add('error');
@@ -273,33 +451,21 @@ document.getElementById('preview-prayer').addEventListener('click', function() {
       prayerData[key] = value;
     }
   });
-  
   if (!allFilled) {
     showToast('Please fill in all prayer sections');
     return;
   }
-  
-  // Build the prayer preview
   const prayerText = buildPrayerText(prayerData);
-  document.getElementById('prayer-preview-text').textContent = prayerText;
-  
-  // Show the prayer preview card
   document.getElementById('prayer-preview-card').style.display = 'block';
-  
-  // Scroll to preview
+  // Typewriter effect for the preview
   setTimeout(() => {
     dismissKeyboard();
     document.getElementById('prayer-preview-card').scrollIntoView({ behavior: 'smooth' });
+    typewriterEffect(document.getElementById('prayer-preview-text'), prayerText);
   }, 50);
 });
 
-// Build the prayer text from the collected data
-function buildPrayerText(data) {
-  // Join all prayer parts with spaces
-  return Object.values(data).join(' ');
-}
-
-// Edit Prayer button click
+// Edit Prayer
 document.getElementById('edit-prayer').addEventListener('click', function() {
   dismissKeyboard();
   setTimeout(() => {
@@ -307,62 +473,89 @@ document.getElementById('edit-prayer').addEventListener('click', function() {
   }, 50);
 });
 
-// Generate Code button click
+// Generate Code — with scramble animation + confetti
 document.getElementById('generate-code').addEventListener('click', function() {
   dismissKeyboard();
-
   const prayerText = document.getElementById('prayer-preview-text').textContent;
-  
-  // Generate the prayer code using English gematria
-  const code = generatePrayerCode(prayerText);
-  
-  // Display the code
-  document.getElementById('prayer-code').textContent = code;
-  
-  // Show the prayer code card
+  const finalCode = generatePrayerCode(prayerText);
+  const codeEl = document.getElementById('prayer-code');
+
   document.getElementById('prayer-code-card').style.display = 'block';
-  
-  // Scroll to code
   setTimeout(() => {
     dismissKeyboard();
     document.getElementById('prayer-code-card').scrollIntoView({ behavior: 'smooth' });
   }, 50);
+
+  // Scramble animation — random digits cycling before reveal
+  let iterations = 0;
+  const maxIterations = 25;
+  const interval = setInterval(() => {
+    codeEl.textContent = Array.from({length: Math.max(finalCode.length, 4)}, () =>
+      Math.floor(Math.random() * 10)).join('');
+    iterations++;
+    if (iterations >= maxIterations) {
+      clearInterval(interval);
+      codeEl.textContent = finalCode;
+      codeEl.classList.add('glow-effect', 'fade-in');
+      launchConfetti();
+
+      // Save to history, update streak, check milestones
+      savePrayerToHistory(finalCode, prayerText, currentCategory);
+      updateStreak();
+      renderStreak();
+      incrementPrayerCount();
+
+      // Pulse share buttons after reveal
+      setTimeout(() => {
+        document.querySelectorAll('.social-button').forEach(btn => {
+          btn.classList.add('glow-effect');
+          setTimeout(() => btn.classList.remove('glow-effect'), 4000);
+        });
+      }, 1500);
+    }
+  }, 60);
 });
 
-// Generate a prayer code using English gematria (A=1, B=2, etc.)
-function generatePrayerCode(text, length = 6) {
-  let total = 0;
-  
-  // Calculate the gematria value
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i].toUpperCase();
-    if (/[A-Z]/.test(char)) {
-      // A=1, B=2, etc.
-      total += char.charCodeAt(0) - 64;
-    } else if (/[0-9]/.test(char)) {
-      // Numbers at face value
-      total += parseInt(char);
-    }
-  }
-  
-  // Return as a whole number (no leading zeros)
-  return String(total % (10 ** length));
-}
-
-// Copy Code button click
+// Copy Code
 document.getElementById('copy-code').addEventListener('click', function(e) {
   e.preventDefault();
   const code = document.getElementById('prayer-code').textContent;
   navigator.clipboard.writeText(code);
-  showToast('Prayer Code copied to clipboard');
+  showToast('Prayer Code copied to clipboard &#128203;');
+});
+
+// Native Share (mobile share sheet)
+document.getElementById('native-share').addEventListener('click', async function(e) {
+  e.preventDefault();
+  const code = document.getElementById('prayer-code').textContent;
+  const shareData = {
+    title: 'My Prayer Code',
+    text: `My Prayer Code: ${code}\n\nPray this code with me to amplify our prayers.\nCreate yours at prayercodes.com`,
+    url: 'https://prayercodes.com'
+  };
+  if (navigator.share) {
+    try { await navigator.share(shareData); }
+    catch(err) { /* user cancelled */ }
+  } else {
+    navigator.clipboard.writeText(shareData.text);
+    showToast('Prayer code copied — paste it anywhere!');
+  }
+});
+
+// WhatsApp Share
+document.getElementById('share-whatsapp').addEventListener('click', function(e) {
+  e.preventDefault();
+  const code = document.getElementById('prayer-code').textContent;
+  const msg = `My Prayer Code: ${code}\n\nPray this code with me! Create yours at prayercodes.com`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 });
 
 // Share on Facebook
 document.getElementById('share-facebook').addEventListener('click', function(e) {
   e.preventDefault();
   const code = document.getElementById('prayer-code').textContent;
-  const shareText = `My Prayer Code: ${code}\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com`;
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
+  const shareText = `My Prayer Code: ${code}\n\nPray this code with me to amplify our prayers.\nCreate your own at prayercodes.com`;
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://prayercodes.com')}&quote=${encodeURIComponent(shareText)}`;
   window.open(shareUrl, '_blank');
 });
 
@@ -370,28 +563,25 @@ document.getElementById('share-facebook').addEventListener('click', function(e) 
 document.getElementById('share-twitter').addEventListener('click', function(e) {
   e.preventDefault();
   const code = document.getElementById('prayer-code').textContent;
-  const shareText = `My Prayer Code: ${code}\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com`;
+  const shareText = `My Prayer Code: ${code}\n\nPray this code with me to amplify our prayers.\nCreate your own at prayercodes.com`;
   const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
   window.open(shareUrl, '_blank');
 });
 
-// New Prayer button click
+// New Prayer
 document.getElementById('new-prayer').addEventListener('click', function() {
   dismissKeyboard();
-
-  // Reset all cards
   document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
-  
-  // Hide all cards except the category selection
   document.getElementById('prayer-builder').style.display = 'none';
   document.getElementById('prayer-preview-card').style.display = 'none';
   document.getElementById('prayer-code-card').style.display = 'none';
-  
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Rotating taglines
+// ═══════════════════════════════════════════════
+// INITIALIZATION
+// ═══════════════════════════════════════════════
+
 const taglines = [
   "Create structured prayers inspired by scripture, generate your Prayer Code, and connect to the Kingdom of Heaven.",
   "Let your prayers be guided by biblical structure and amplified by the sound of creation.",
@@ -402,12 +592,33 @@ const taglines = [
   "The Kingdom of Heaven awaits your prayers. Create, encode, and connect with Prayer Codes."
 ];
 
-// Select a tagline based on the day of the month
 document.addEventListener('DOMContentLoaded', function() {
+  // Daily tagline
   const date = new Date();
   const dayOfMonth = date.getDate();
   const taglineIndex = dayOfMonth % taglines.length;
   document.getElementById('tagline').textContent = taglines[taglineIndex];
+
+  // Render prayer history and streak
+  renderPrayerHistory();
+  renderStreak();
+
+  // Welcome back banner for returning users
+  const history = JSON.parse(localStorage.getItem('prayerHistory') || '[]');
+  if (history.length > 0) {
+    const last = history[0];
+    const banner = document.createElement('div');
+    banner.className = 'card welcome-back-card';
+    banner.innerHTML = `
+      <h3 class="text-center">Welcome Back! &#128591;</h3>
+      <p class="text-center">Your last Prayer Code: <strong style="color:var(--divine-gold);font-size:1.3rem;">${last.code}</strong></p>
+      <p class="text-center" style="opacity:0.7;font-size:0.9rem;">Created ${new Date(last.date).toLocaleDateString()}</p>
+      <div class="button-container">
+        <button class="button" onclick="this.closest('.card').remove()">Create New Prayer</button>
+      </div>
+    `;
+    document.querySelector('.main-content').prepend(banner);
+  }
 });
 </script>
 {% endblock %}
