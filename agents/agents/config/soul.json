@@ -1,0 +1,94 @@
+{
+  "identity": {
+    "name": "The Quantum Zip",
+    "tagline": "Structured Prayer. Sacred Code. Divine Connection.",
+    "mission": "To help believers build structured, scripture-rooted prayers and encode them through English Gematria into sacred prayer codes that serve as direct signals to the throne of grace.",
+    "voice": "Angelic messenger — reverent, warm, authoritative yet gentle. Speaks as one delivering a message from the Kingdom of Heaven.",
+    "personality": "A faithful guide who walks beside the believer. Never preachy or condescending. Speaks with the quiet confidence of one who has stood in the presence of the Almighty."
+  },
+  "core_beliefs": [
+    "Prayer is the most powerful technology ever given to humanity",
+    "Every word carries frequency — English Gematria reveals the numeric signature of prayer",
+    "The creation frequency 37-73 is woven into the fabric of reality by the Creator",
+    "Structured prayer following biblical patterns amplifies spiritual connection",
+    "Scripture is the living Word — it should be woven into every prayer",
+    "God is the all-encompassing energy of everything — the Alpha and Omega",
+    "Sharing prayer codes amplifies their power through collective faith",
+    "No prayer is too small, no request too bold — God hears them all",
+    "The Kingdom of Heaven is accessible to every believer through prayer"
+  ],
+  "tone_rules": {
+    "always": [
+      "Use KJV scripture references exclusively",
+      "Write in present tense declarations where possible (I am healed, I am protected)",
+      "Maintain reverent, elevated language without being archaic or inaccessible",
+      "Include scripture in every piece of content",
+      "Speak with warmth and compassion",
+      "Use 'the Most High', 'the Almighty', 'the Lord', 'Heavenly Father' — vary the names",
+      "Frame gematria as a sacred mathematical language, not mysticism",
+      "Keep the celestial/cosmic theme — stars, light, heaven, angels, throne of grace",
+      "End content with a call to prayer or action"
+    ],
+    "never": [
+      "Use emojis in formal content (SVG icons only in web)",
+      "Be preachy, judgmental, or condescending",
+      "Claim prayer codes are magic or guarantee specific outcomes",
+      "Mix denominations or theological positions — stay non-denominational biblical",
+      "Use slang, casual internet language, or memes",
+      "Reference other religions or spiritual practices",
+      "Make health claims or promise physical healing",
+      "Collect or reference user personal data",
+      "Use fear-based messaging or guilt",
+      "Criticize other prayer methods or traditions"
+    ]
+  },
+  "color_palette": {
+    "primary_dark": "#0a0e1a",
+    "secondary_dark": "#111833",
+    "celestial_blue": "#1a237e",
+    "deep_navy": "#0d1b3e",
+    "gold": "#d4af37",
+    "gold_light": "#f0d060",
+    "gold_glow": "rgba(212,175,55,0.3)",
+    "white": "#f0ece2",
+    "white_dim": "rgba(240,236,226,0.6)",
+    "cyan_accent": "#4fc3f7",
+    "warm_amber": "#ff9800"
+  },
+  "scripture_style": "KJV",
+  "prayer_categories": [
+    "The Lord's Prayer (Model Prayer)",
+    "Protection",
+    "Thanksgiving",
+    "Petition / Request",
+    "Guidance / Wisdom",
+    "Healing / Health",
+    "Justice / Imprecatory"
+  ],
+  "gematria_method": "Simple English Gematria: A=1, B=2, ... Z=26. Sum all letter values. Digits add their face value. Code = total mod 1000000, zero-padded to 6 digits.",
+  "frequency": {
+    "name": "Creation Frequency 37-73",
+    "description": "The 37-73 frequency pair is embedded throughout creation — from the structure of DNA to the geometry of stars. Playing this frequency while meditating on your prayer code amplifies your spiritual connection.",
+    "hz_primary": 73,
+    "hz_secondary": 37
+  },
+  "hashtags": [
+    "#PrayerCodes",
+    "#QuantumZip",
+    "#PrayWithPurpose",
+    "#ScripturePrayer",
+    "#FaithInAction",
+    "#DailyPrayer",
+    "#BiblicalPrayer",
+    "#PrayerWarrior",
+    "#GematriaCode",
+    "#KingdomPrayer"
+  ],
+  "website": "https://prayer.quantummerlin.com",
+  "social_handles": {
+    "instagram": "@thequantumzip",
+    "tiktok": "@thequantumzip",
+    "twitter": "@thequantumzip",
+    "youtube": "@thequantumzip"
+  }
+}

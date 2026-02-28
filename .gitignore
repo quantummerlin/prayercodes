@@ -26,6 +26,8 @@ app.log
 
 # Temp files
 outputs/
+agents/agents/output/
+extracted/
 *.zip
 
 # Bot files (not part of the webapp)

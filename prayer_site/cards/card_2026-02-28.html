@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prayer Code Card — 006214</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #0a0e1a;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.card {
+  width: 1080px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 30%, #1a237e 0%, #111833 40%, #0a0e1a 100%);
+}
+
+/* Stars background */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(212,175,55,0.5), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 20% 80%, rgba(212,175,55,0.4), transparent),
+    radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 40% 65%, rgba(212,175,55,0.3), transparent),
+    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 85% 55%, rgba(212,175,55,0.4), transparent),
+    radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 25% 95%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 75% 85%, rgba(212,175,55,0.3), transparent),
+    radial-gradient(1px 1px at 45% 5%, rgba(255,255,255,0.5), transparent);
+  pointer-events: none;
+}
+
+/* Golden glow at center */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.card-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  text-align: center;
+}
+
+/* Top border accent */
+.card-top-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+.card-bottom-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+/* Brand */
+.card-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.6);
+  margin-bottom: 20px;
+}
+
+/* Category */
+.card-category {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(240,236,226,0.7);
+  margin-bottom: 8px;
+}
+
+.card-topic {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: rgba(212,175,55,0.8);
+  margin-bottom: 16px;
+}
+
+/* Divider */
+.divider {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 20px auto;
+}
+
+.divider-sm {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
+  margin: 16px auto;
+}
+
+/* Scripture */
+.card-scripture {
+  font-size: 24px;
+  font-style: italic;
+  color: #f0ece2;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-bottom: 6px;
+}
+
+.card-scripture-ref {
+  font-size: 16px;
+  color: rgba(212,175,55,0.7);
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+/* Prayer excerpt */
+.card-prayer {
+  font-size: 18px;
+  color: rgba(240,236,226,0.65);
+  line-height: 1.5;
+  max-width: 700px;
+  margin-bottom: 8px;
+}
+
+/* Code display */
+.card-code-label {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.6);
+  margin-bottom: 12px;
+}
+
+.card-code {
+  font-family: 'Cinzel', serif;
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: 16px;
+  color: #d4af37;
+  text-shadow: 0 0 30px rgba(212,175,55,0.4), 0 0 60px rgba(212,175,55,0.15);
+  margin-bottom: 8px;
+}
+
+.card-gematria {
+  font-size: 15px;
+  color: rgba(240,236,226,0.5);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.card-root {
+  font-size: 14px;
+  color: rgba(212,175,55,0.5);
+  font-style: italic;
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+
+/* Frequency badge */
+.freq-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 20px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.7);
+  margin-bottom: 16px;
+}
+
+/* Patterns */
+.card-patterns {
+  max-width: 700px;
+  margin-bottom: 16px;
+}
+.pattern-badge {
+  font-size: 13px;
+  color: rgba(240,236,226,0.5);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+/* Date */
+.card-date {
+  font-size: 14px;
+  color: rgba(240,236,226,0.35);
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+/* CTA */
+.card-cta {
+  font-size: 14px;
+  color: rgba(212,175,55,0.5);
+  letter-spacing: 2px;
+  margin-top: 12px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-top-border"></div>
+  <div class="card-bottom-border"></div>
+  <div class="card-inner">
+    <div class="card-brand">The Quantum Zip</div>
+    <div class="card-category">Justice</div>
+    
+    <div class="divider"></div>
+    <div class="card-scripture">"But let judgment run down as waters, and righteousness as a mighty stream."</div>
+    <div class="card-scripture-ref">— Amos 5:24 (KJV)</div>
+    <div class="card-prayer">Lord, I bring before You the injustice that weighs upon my heart. You see all things and Your judgment is righteous. I l...</div>
+    <div class="divider-sm"></div>
+    <div class="card-code-label">Your Prayer Code</div>
+    <div class="card-code">006214</div>
+    <div class="card-gematria">Gematria Value: 6214 | Root: 4</div>
+    <div class="card-root">Creation — the four corners of the earth, the four seasons. God's creative order</div>
+    
+    
+    <div class="divider-sm"></div>
+    <div class="card-date">February 28, 2026</div>
+    <div class="card-cta">prayer.quantummerlin.com</div>
+  </div>
+</div>
+</body>
+</html>

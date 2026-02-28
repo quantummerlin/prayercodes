@@ -1,0 +1,387 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="tagline text-center">
+  <p id="tagline">Create structured prayers inspired by scripture, generate your Prayer Code, and connect to the Kingdom of Heaven.</p>
+</div>
+
+<div class="card">
+  <h2 class="text-center">Build Your Prayer</h2>
+  <p class="text-center">Select a prayer category to begin your journey</p>
+  
+  <div class="prayer-categories">
+    <div class="category-card" data-category="model_prayer">
+      <div class="category-icon">🙏</div>
+      <div class="category-name">Model Prayer</div>
+    </div>
+    <div class="category-card" data-category="protection">
+      <div class="category-icon">🛡️</div>
+      <div class="category-name">Protection</div>
+    </div>
+    <div class="category-card" data-category="thanksgiving">
+      <div class="category-icon">❤️</div>
+      <div class="category-name">Thanksgiving</div>
+    </div>
+    <div class="category-card" data-category="petition">
+      <div class="category-icon">📝</div>
+      <div class="category-name">Petition</div>
+    </div>
+    <div class="category-card" data-category="guidance">
+      <div class="category-icon">🔍</div>
+      <div class="category-name">Guidance</div>
+    </div>
+    <div class="category-card" data-category="healing">
+      <div class="category-icon">🌿</div>
+      <div class="category-name">Healing</div>
+    </div>
+    <div class="category-card" data-category="justice">
+      <div class="category-icon">⚖️</div>
+      <div class="category-name">Justice</div>
+    </div>
+  </div>
+</div>
+
+<div id="prayer-builder" class="card" style="display: none;">
+  <h2 class="text-center">Prayer Builder</h2>
+  <div id="prayer-steps-container">
+    <!-- Prayer steps will be inserted here dynamically -->
+  </div>
+  
+  <div class="button-container">
+    <button id="preview-prayer" class="button">Preview Prayer</button>
+  </div>
+</div>
+
+<div id="prayer-preview-card" class="card" style="display: none;">
+  <h2 class="text-center">Your Prayer</h2>
+  <div class="prayer-preview">
+    <h3 class="prayer-preview-title">Prayer Preview</h3>
+    <div id="prayer-preview-text"></div>
+  </div>
+  
+  <div class="button-container">
+    <button id="edit-prayer" class="button" style="margin-right: 10px;">Edit Prayer</button>
+    <button id="generate-code" class="button">Generate Code</button>
+  </div>
+</div>
+
+<div id="prayer-code-card" class="card" style="display: none;">
+  <h2 class="text-center">Your Prayer Code</h2>
+  <div class="code-display" id="prayer-code"></div>
+  
+  <div class="share-section">
+    <h3 class="text-center">Amplify Your Prayer Code</h3>
+    <p class="text-center">Share your code and listen to the creation frequency (37-73 Hz) to strengthen your connection to Heaven.</p>
+    
+    <div class="social-share">
+      <a href="#" class="social-button" id="copy-code">
+        <img src="{{ url_for('static', filename='icons/copy.svg') }}" alt="Copy" class="social-icon">
+        <span>Copy Code</span>
+      </a>
+      <a href="#" class="social-button" id="share-facebook">
+        <img src="{{ url_for('static', filename='icons/facebook.svg') }}" alt="Facebook" class="social-icon">
+        <span>Share on Facebook</span>
+      </a>
+      <a href="#" class="social-button" id="share-twitter">
+        <img src="{{ url_for('static', filename='icons/twitter.svg') }}" alt="Twitter" class="social-icon">
+        <span>Share on Twitter</span>
+      </a>
+    </div>
+    
+    <div class="amplify-section">
+      <h3 class="text-center">Listen to Creation Frequency</h3>
+      <p class="text-center">Focus on your prayer while listening to the 37-73 Hz creation frequency</p>
+      
+      <div class="frequency-player">
+        <div class="audio-player">
+          <audio controls id="creation-frequency">
+            <source src="{{ url_for('static', filename='audio/creation-frequency.mp3') }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="frequency-info">
+          <p>The 37-73 Hz frequency is known as the "Sound of Creation" - it helps amplify your prayers and connect to the Kingdom of Heaven.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="button-container">
+    <button id="new-prayer" class="button">Create New Prayer</button>
+  </div>
+</div>
+
+<div class="card">
+  <h3 class="text-center">Prayer Guidance</h3>
+  <div class="scripture-quote">
+    "But when ye pray, use not vain repetitions, as the heathen do: for they think that they shall be heard for their much speaking."
+    <div class="scripture-reference">Matthew 6:7 (KJV)</div>
+  </div>
+  
+  <p class="text-center">
+    Prayer is your direct connection to God. The structure helps guide your heart, but the sincerity of your faith is what matters most.
+  </p>
+  
+  <div class="scripture-quote">
+    "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need."
+    <div class="scripture-reference">Hebrews 4:16 (KJV)</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Prayer category flows - structured prayer templates
+const categoryFlows = {
+  "model_prayer": [
+    {"key": "adoration", "prompt": "🙏 Our Father which art in heaven 🙏", "guidance": "Begin by honoring God", "scripture": "Hallowed be thy name. (Matthew 6:9 KJV)", "example": "Example: 'Heavenly Father, You are holy and loving, and I am always held in Your care.'"},
+    {"key": "align_will", "prompt": "🙏 Thy kingdom come, Thy will be done 🙏", "guidance": "Ask for God's guidance and plan to be done in your life", "scripture": "Thy will be done in earth, as it is in heaven. (Matthew 6:10 KJV)", "example": "Example: 'Your will is done in my life and I walk in Your purpose.'"},
+    {"key": "petition", "prompt": "🙏 Give us this day our daily bread 🙏", "guidance": "Ask for what you need today", "scripture": "Give us this day our daily bread. (Matthew 6:11 KJV)", "example": "Example: 'My schoolwork is blessed and I have all I need today.'"},
+    {"key": "repentance", "prompt": "🙏 And forgive us our debts, as we forgive our debtors 🙏", "guidance": "Confess and forgive", "scripture": "And forgive us our debts, as we forgive our debtors. (Matthew 6:12 KJV)", "example": "Example: 'I am forgiven and I freely forgive others.'"},
+    {"key": "protection", "prompt": "🙏 And lead us not into temptation, but deliver us from evil 🙏", "guidance": "Ask for God's protection", "scripture": "And lead us not into temptation, but deliver us from evil. (Matthew 6:13 KJV)", "example": "Example: 'I am protected and I make wise choices every day.'"},
+    {"key": "closing", "prompt": "🙏 Amen 🙏", "guidance": "Seal your prayer with faith", "scripture": "", "example": "Example: 'Amen.'"}
+  ],
+  "protection": [
+    {"key": "address", "prompt": "🛡️ Talk to God / Address Him 🛡️", "guidance": "Begin with trust.", "scripture": "God is our refuge and strength, a very present help in trouble. (Psalm 46:1 KJV)", "example": "Example: 'Dear God, I trust in Your power to keep me safe.'"},
+    {"key": "problem", "prompt": "🛡️ State the Problem / Specific Need 🛡️", "guidance": "Describe your need.", "scripture": "The LORD shall preserve thee from all evil: he shall preserve thy soul. (Psalm 121:7 KJV)", "example": "Example: 'I am kept safe when travelling alone.'"},
+    {"key": "appeal", "prompt": "🛡️ Appeal to God's Character 🛡️", "guidance": "Recall God's protection.", "scripture": "The name of the LORD is a strong tower: the righteous runneth into it, and is safe. (Proverbs 18:10 KJV)", "example": "Example: 'You keep me safe and I am always watched over.'"},
+    {"key": "request", "prompt": "🛡️ Request Action 🛡️", "guidance": "Ask God to act.", "scripture": "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. (Philippians 4:6 KJV)", "example": "Example: 'Your protection and peace fill me now.'"},
+    {"key": "praise", "prompt": "🛡️ Praise / Declare Faith 🛡️", "guidance": "Seal your prayer.", "scripture": "Let every thing that hath breath praise the LORD. (Psalm 150:6 KJV)", "example": "Example: 'Thank You for helping me and always being with me.'"},
+    {"key": "closing", "prompt": "🛡️ Amen 🛡️", "guidance": "Seal your prayer.", "scripture": "", "example": "Example: 'Amen. I know You hear me.'"}
+  ],
+  "thanksgiving": [
+    {"key": "praise", "prompt": "❤️ Praise / Thank God ❤️", "guidance": "Begin with thanks.", "scripture": "In every thing give thanks: for this is the will of God in Christ Jesus concerning you. (1 Thessalonians 5:18 KJV)", "example": "Example: 'Thank You for loving me. Your goodness surrounds me.'"},
+    {"key": "blessing", "prompt": "❤️ State Specific Blessing ❤️", "guidance": "Name your blessing.", "scripture": "Bless the LORD, O my soul: and all that is within me, bless his holy name. (Psalm 103:1 KJV)", "example": "Example: 'My family and friends are blessed and I am always grateful.'"},
+    {"key": "gratitude", "prompt": "❤️ End with Praise / Gratitude ❤️", "guidance": "Seal your prayer.", "scripture": "I will offer to thee the sacrifice of thanksgiving, and will call upon the name of the LORD. (Psalm 116:17 KJV)", "example": "Example: 'I am grateful for all You do and I see Your blessings every day.'"},
+    {"key": "closing", "prompt": "❤️ Amen ❤️", "guidance": "Seal your prayer.", "scripture": "", "example": "Example: 'Amen.'"}
+  ],
+  "petition": [
+    {"key": "adoration", "prompt": "🙏 Adoration 🙏", "guidance": "Begin with adoration.", "scripture": "Great is the LORD, and greatly to be praised. (Psalm 145:3 KJV)", "example": "Example: 'God, You are great and powerful, and I am always blessed.'"},
+    {"key": "confession", "prompt": "🙏 Confession (if applicable) 🙏", "guidance": "Confess if needed.", "scripture": "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness. (1 John 1:9 KJV)", "example": "Example: 'I am forgiven and I walk in freedom.'"},
+    {"key": "thanksgiving", "prompt": "🙏 Thanksgiving 🙏", "guidance": "Thank God.", "scripture": "In every thing give thanks: for this is the will of God in Christ Jesus concerning you. (1 Thessalonians 5:18 KJV)", "example": "Example: 'Thank You for helping me. All my needs are met.'"},
+    {"key": "supplication", "prompt": "🙏 Supplication / Request 🙏", "guidance": "Ask for what you need.", "scripture": "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you. (Matthew 7:7 KJV)", "example": "Example: 'I am successful in my game and You are always with me.'"},
+    {"key": "closing", "prompt": "🙏 Amen 🙏", "guidance": "Seal your prayer.", "scripture": "", "example": "Example: 'Amen.'"}
+  ],
+  "guidance": [
+    {"key": "adoration", "prompt": "🔍 Adoration 🔍", "guidance": "Begin with adoration.", "scripture": "Now faith is the substance of things hoped for, the evidence of things not seen. (Hebrews 11:1 KJV)", "example": "Example: 'God, You know everything and I am always guided by You.'"},
+    {"key": "need", "prompt": "🔍 State Need / Problem 🔍", "guidance": "Describe your need.", "scripture": "He healeth the broken in heart, and bindeth up their wounds. (Psalm 147:3 KJV)", "example": "Example: 'I make wise decisions and You lead me every day.'"},
+    {"key": "appeal_wisdom", "prompt": "🔍 Appeal to God's Wisdom 🔍", "guidance": "Ask for wisdom.", "scripture": "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him. (James 1:5 KJV)", "example": "Example: 'I have wisdom for my choices and I am always confident.'"},
+    {"key": "request_guidance", "prompt": "🔍 Request Guidance 🔍", "guidance": "Ask for guidance.", "scripture": "Trust in the LORD with all thine heart; and lean not unto thine own understanding. (Proverbs 3:5 KJV)", "example": "Example: 'I am guided in what to do and I trust Your leading every moment.'"},
+    {"key": "declare_trust", "prompt": "🔍 Declare Trust 🔍", "guidance": "Seal your prayer.", "scripture": "Fear thou not; for I am with thee. (Isaiah 41:10 KJV)", "example": "Example: 'I trust You, God, and I am always secure.'"},
+    {"key": "closing", "prompt": "🔍 Amen 🔍", "guidance": "Seal your prayer.", "scripture": "", "example": "Example: 'Amen.'"}
+  ],
+  "healing": [
+    {"key": "adoration", "prompt": "🌿 Adoration 🌿", "guidance": "Begin with adoration.", "scripture": "The LORD is nigh unto them that are of a broken heart. (Psalm 34:18 KJV)", "example": "Example: 'God, You care for me and I am always healed.'"},
+    {"key": "confession", "prompt": "🌿 Confession 🌿", "guidance": "Confess if needed.", "scripture": "Repent ye therefore, and be converted, that your sins may be blotted out. (Acts 3:19 KJV)", "example": "Example: 'I am forgiven and I care for myself every day.'"},
+    {"key": "thanksgiving", "prompt": "🌿 Thanksgiving 🌿", "guidance": "Thank God.", "scripture": "In every thing give thanks: for this is the will of God in Christ Jesus concerning you. (1 Thessalonians 5:18 KJV)", "example": "Example: 'Thank You for my health. I am strong and well always.'"},
+    {"key": "request_healing", "prompt": "🌿 Request Healing / Strength 🌿", "guidance": "Ask for healing.", "scripture": "He healeth the broken in heart, and bindeth up their wounds. (Psalm 147:3 KJV)", "example": "Example: 'I am healed and full of strength every day.'"},
+    {"key": "closing", "prompt": "🌿 Amen 🌿", "guidance": "Seal your prayer.", "scripture": "", "example": "Example: 'Amen.'"}
+  ],
+  "justice": [
+    {"key": "wrong", "prompt": "⚖️ State Wrong / Injustice ⚖️", "guidance": "Describe the injustice.", "scripture": "But let judgment run down as waters, and righteousness as a mighty stream. (Amos 5:24 KJV)", "example": "Example: 'Justice is done and things are made right.'"},
+    {"key": "call_justice", "prompt": "⚖️ Call for God's Justice ⚖️", "guidance": "Ask for justice.", "scripture": "For I the LORD love judgment. (Isaiah 61:8 KJV)", "example": "Example: 'God makes things right and justice always prevails.'"},
+    {"key": "declare_confidence", "prompt": "⚖️ Declare Confidence in God's Righteousness ⚖️", "guidance": "Seal your prayer.", "scripture": "For the LORD is righteous, he loveth righteousness: his countenance doth behold the upright. (Psalm 11:7 KJV)", "example": "Example: 'I trust You to bring justice and I see Your righteousness every day.'"},
+    {"key": "closing", "prompt": "⚖️ Amen ⚖️", "guidance": "Seal your prayer.", "scripture": "", "example": "Example: 'Amen.'"}
+  ]
+};
+
+// Store the current prayer data
+let currentCategory = '';
+let prayerData = {};
+
+// When a category card is clicked
+document.querySelectorAll('.category-card').forEach(card => {
+  card.addEventListener('click', function() {
+    // Remove selected class from all cards
+    document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+    
+    // Add selected class to clicked card
+    this.classList.add('selected');
+    
+    // Get the category
+    currentCategory = this.getAttribute('data-category');
+    
+    // Reset prayer data
+    prayerData = {};
+    
+    // Build the prayer steps
+    buildPrayerSteps(currentCategory);
+    
+    // Show the prayer builder
+    document.getElementById('prayer-builder').style.display = 'block';
+    
+    // Scroll to prayer builder
+    document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Build the prayer steps based on the selected category
+function buildPrayerSteps(category) {
+  const stepsContainer = document.getElementById('prayer-steps-container');
+  stepsContainer.innerHTML = ''; // Clear previous steps
+  
+  const steps = categoryFlows[category];
+  
+  steps.forEach((step, index) => {
+    const stepElement = document.createElement('div');
+    stepElement.className = 'prayer-step';
+    stepElement.innerHTML = `
+      <div class="prayer-step-header">
+        <div class="prayer-step-icon">${step.prompt.split(' ')[0]}</div>
+        <div class="prayer-step-title">${step.prompt}</div>
+      </div>
+      <div class="prayer-step-guidance">${step.guidance}</div>
+      <div class="scripture-quote">
+        ${step.scripture}
+      </div>
+      <div class="form-group">
+        <textarea id="step-${index}" data-key="${step.key}" rows="3" placeholder="${step.example}"></textarea>
+      </div>
+    `;
+    stepsContainer.appendChild(stepElement);
+  });
+}
+
+// Preview Prayer button click
+document.getElementById('preview-prayer').addEventListener('click', function() {
+  // Collect all prayer step inputs
+  const textareas = document.querySelectorAll('#prayer-steps-container textarea');
+  let allFilled = true;
+  
+  textareas.forEach(textarea => {
+    const key = textarea.getAttribute('data-key');
+    const value = textarea.value.trim();
+    
+    if (!value) {
+      allFilled = false;
+      textarea.classList.add('error');
+    } else {
+      textarea.classList.remove('error');
+      prayerData[key] = value;
+    }
+  });
+  
+  if (!allFilled) {
+    showToast('Please fill in all prayer sections');
+    return;
+  }
+  
+  // Build the prayer preview
+  const prayerText = buildPrayerText(prayerData);
+  document.getElementById('prayer-preview-text').textContent = prayerText;
+  
+  // Show the prayer preview card
+  document.getElementById('prayer-preview-card').style.display = 'block';
+  
+  // Scroll to preview
+  document.getElementById('prayer-preview-card').scrollIntoView({ behavior: 'smooth' });
+});
+
+// Build the prayer text from the collected data
+function buildPrayerText(data) {
+  // Join all prayer parts with spaces
+  return Object.values(data).join(' ');
+}
+
+// Edit Prayer button click
+document.getElementById('edit-prayer').addEventListener('click', function() {
+  document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
+});
+
+// Generate Code button click
+document.getElementById('generate-code').addEventListener('click', function() {
+  const prayerText = document.getElementById('prayer-preview-text').textContent;
+  
+  // Generate the prayer code using English gematria
+  const code = generatePrayerCode(prayerText);
+  
+  // Display the code
+  document.getElementById('prayer-code').textContent = code;
+  
+  // Show the prayer code card
+  document.getElementById('prayer-code-card').style.display = 'block';
+  
+  // Scroll to code
+  document.getElementById('prayer-code-card').scrollIntoView({ behavior: 'smooth' });
+});
+
+// Generate a prayer code using English gematria (A=1, B=2, etc.)
+function generatePrayerCode(text, length = 6) {
+  let total = 0;
+  
+  // Calculate the gematria value
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i].toUpperCase();
+    if (/[A-Z]/.test(char)) {
+      // A=1, B=2, etc.
+      total += char.charCodeAt(0) - 64;
+    } else if (/[0-9]/.test(char)) {
+      // Numbers at face value
+      total += parseInt(char);
+    }
+  }
+  
+  // Format as a 6-digit code
+  return String(total % (10 ** length)).padStart(length, '0');
+}
+
+// Copy Code button click
+document.getElementById('copy-code').addEventListener('click', function(e) {
+  e.preventDefault();
+  const code = document.getElementById('prayer-code').textContent;
+  navigator.clipboard.writeText(code);
+  showToast('Prayer Code copied to clipboard');
+});
+
+// Share on Facebook
+document.getElementById('share-facebook').addEventListener('click', function(e) {
+  e.preventDefault();
+  const code = document.getElementById('prayer-code').textContent;
+  const shareText = `My Prayer Code: ${code}\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com`;
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
+  window.open(shareUrl, '_blank');
+});
+
+// Share on Twitter
+document.getElementById('share-twitter').addEventListener('click', function(e) {
+  e.preventDefault();
+  const code = document.getElementById('prayer-code').textContent;
+  const shareText = `My Prayer Code: ${code}\n\nI created this code with Prayer Codes app. The more we share and pray with these codes, the stronger our connection to Heaven becomes.\n\nCreate your own at prayercodes.com`;
+  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+  window.open(shareUrl, '_blank');
+});
+
+// New Prayer button click
+document.getElementById('new-prayer').addEventListener('click', function() {
+  // Reset all cards
+  document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+  
+  // Hide all cards except the category selection
+  document.getElementById('prayer-builder').style.display = 'none';
+  document.getElementById('prayer-preview-card').style.display = 'none';
+  document.getElementById('prayer-code-card').style.display = 'none';
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Rotating taglines
+const taglines = [
+  "Create structured prayers inspired by scripture, generate your Prayer Code, and connect to the Kingdom of Heaven.",
+  "Let your prayers be guided by biblical structure and amplified by the sound of creation.",
+  "Build prayers that align with God's Word, generate your unique code, and strengthen your connection to Heaven.",
+  "Prayer Codes: Where ancient biblical wisdom meets modern spiritual practice.",
+  "Your prayers encoded, your faith amplified, your connection to Heaven strengthened.",
+  "Structured prayer leads to focused faith. Generate your code and amplify your connection to God.",
+  "The Kingdom of Heaven awaits your prayers. Create, encode, and connect with Prayer Codes."
+];
+
+// Select a tagline based on the day of the month
+document.addEventListener('DOMContentLoaded', function() {
+  const date = new Date();
+  const dayOfMonth = date.getDate();
+  const taglineIndex = dayOfMonth % taglines.length;
+  document.getElementById('tagline').textContent = taglines[taglineIndex];
+});
+</script>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
