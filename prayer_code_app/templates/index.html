@@ -188,9 +188,18 @@ const categoryFlows = {
 let currentCategory = '';
 let prayerData = {};
 
+// Dismiss keyboard helper — blur any focused input so the keyboard stays hidden
+function dismissKeyboard() {
+  if (document.activeElement && document.activeElement !== document.body) {
+    document.activeElement.blur();
+  }
+}
+
 // When a category card is clicked
 document.querySelectorAll('.category-card').forEach(card => {
   card.addEventListener('click', function() {
+    dismissKeyboard();
+
     // Remove selected class from all cards
     document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
     
@@ -209,8 +218,11 @@ document.querySelectorAll('.category-card').forEach(card => {
     // Show the prayer builder
     document.getElementById('prayer-builder').style.display = 'block';
     
-    // Scroll to prayer builder
-    document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
+    // Scroll to prayer builder — delay so DOM settles without triggering keyboard
+    setTimeout(() => {
+      dismissKeyboard();
+      document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
+    }, 50);
   });
 });
 
@@ -243,6 +255,8 @@ function buildPrayerSteps(category) {
 
 // Preview Prayer button click
 document.getElementById('preview-prayer').addEventListener('click', function() {
+  dismissKeyboard();
+
   // Collect all prayer step inputs
   const textareas = document.querySelectorAll('#prayer-steps-container textarea');
   let allFilled = true;
@@ -273,7 +287,10 @@ document.getElementById('preview-prayer').addEventListener('click', function() {
   document.getElementById('prayer-preview-card').style.display = 'block';
   
   // Scroll to preview
-  document.getElementById('prayer-preview-card').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    dismissKeyboard();
+    document.getElementById('prayer-preview-card').scrollIntoView({ behavior: 'smooth' });
+  }, 50);
 });
 
 // Build the prayer text from the collected data
@@ -284,11 +301,16 @@ function buildPrayerText(data) {
 
 // Edit Prayer button click
 document.getElementById('edit-prayer').addEventListener('click', function() {
-  document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
+  dismissKeyboard();
+  setTimeout(() => {
+    document.getElementById('prayer-builder').scrollIntoView({ behavior: 'smooth' });
+  }, 50);
 });
 
 // Generate Code button click
 document.getElementById('generate-code').addEventListener('click', function() {
+  dismissKeyboard();
+
   const prayerText = document.getElementById('prayer-preview-text').textContent;
   
   // Generate the prayer code using English gematria
@@ -301,7 +323,10 @@ document.getElementById('generate-code').addEventListener('click', function() {
   document.getElementById('prayer-code-card').style.display = 'block';
   
   // Scroll to code
-  document.getElementById('prayer-code-card').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    dismissKeyboard();
+    document.getElementById('prayer-code-card').scrollIntoView({ behavior: 'smooth' });
+  }, 50);
 });
 
 // Generate a prayer code using English gematria (A=1, B=2, etc.)
@@ -352,6 +377,8 @@ document.getElementById('share-twitter').addEventListener('click', function(e) {
 
 // New Prayer button click
 document.getElementById('new-prayer').addEventListener('click', function() {
+  dismissKeyboard();
+
   // Reset all cards
   document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
   

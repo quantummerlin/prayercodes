@@ -438,9 +438,9 @@ footer {
   
   .nav {
     flex-direction: row;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    justify-content: center;
     padding-bottom: 0.5rem;
-    justify-content: flex-start;
   }
   
   .nav a {
@@ -451,10 +451,22 @@ footer {
   
   .card {
     padding: 1.25rem;
+    text-align: center;
   }
   
   .button {
     width: 100%;
+    max-width: 320px;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .button-container .button {
+    margin-right: 0 !important;
   }
   
   .social-share {
@@ -464,6 +476,75 @@ footer {
   
   .social-button {
     width: 80%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+  .prayer-categories {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
+
+  .prayer-step {
+    text-align: center;
+  }
+
+  .prayer-step-header {
+    justify-content: center;
+  }
+
+  .prayer-step-guidance {
+    text-align: center;
+  }
+
+  .scripture-quote {
+    text-align: center;
+    border-left: none;
+    border-top: 3px solid var(--scripture-color);
+    padding: 1rem 0.5rem;
+  }
+
+  .scripture-reference {
+    text-align: center;
+  }
+
+  .form-group {
+    text-align: center;
+  }
+
+  .form-group textarea,
+  .form-group input,
+  .form-group select {
+    text-align: center;
+  }
+
+  .prayer-preview {
+    text-align: center;
+  }
+
+  .code-display {
+    font-size: 1.75rem;
+  }
+
+  .amplify-section {
+    text-align: center;
+  }
+
+  .frequency-player {
+    text-align: center;
+  }
+
+  .audio-player {
+    max-width: 100%;
+  }
+
+  .tagline {
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  footer {
+    text-align: center;
   }
 }
 
@@ -473,6 +554,7 @@ footer {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 1rem;
   margin: 1.5rem 0;
+  justify-items: center;
 }
 
 .category-card {
@@ -483,6 +565,8 @@ footer {
   cursor: pointer;
   transition: all 0.3s ease;
   border: 1px solid rgba(138, 108, 219, 0.2);
+  width: 100%;
+  max-width: 180px;
 }
 
 .category-card:hover, .category-card.selected {
