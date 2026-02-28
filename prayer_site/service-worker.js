@@ -1,7 +1,7 @@
 // Prayer Codes PWA Service Worker v2.0
 // Optimised for offline-first with network-first for HTML
 
-const CACHE_NAME = 'prayer-codes-v5';
+const CACHE_NAME = 'prayer-codes-v6';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -9,6 +9,7 @@ const STATIC_ASSETS = [
   '/css/style.css',
   '/js/app.js',
   '/manifest.json',
+  '/images/logo.jpg',
   '/images/nebula-bg.jpeg',
   '/images/stars.png',
   '/images/twinkling.png',

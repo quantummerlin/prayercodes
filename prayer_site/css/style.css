@@ -136,6 +136,20 @@ body{
   text-transform:uppercase;color:var(--angel-blue);opacity:0.8;
 }
 
+/* ── Site Logo ── */
+.site-logo{
+  display:block;margin:0 auto 0.8rem;
+  border-radius:50%;
+  box-shadow:0 0 30px rgba(212,175,55,0.25), 0 0 60px rgba(212,175,55,0.1);
+  border:2px solid rgba(212,175,55,0.3);
+  transition:var(--transition);
+}
+.site-logo:hover{
+  box-shadow:0 0 40px rgba(212,175,55,0.4), 0 0 80px rgba(212,175,55,0.15);
+  transform:scale(1.03);
+}
+@media(max-width:480px){.site-logo{width:90px;height:90px}}
+
 /* ── Navigation ── */
 .site-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem}
 .nav-btn{
