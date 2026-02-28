@@ -342,7 +342,7 @@ function gematria(text) {
 function generateCode(text, len = 6) {
   const total = gematria(text);
   state.gematriaTotal = total;
-  return String(total % (10 ** len)).padStart(len, '0');
+  return String(total % (10 ** len));
 }
 
 /* ─────────────────────────────────────────────
@@ -387,6 +387,7 @@ function setDailyScripture() {
    7. PRAYER BUILDER
    ───────────────────────────────────────────── */
 function selectCategory(catId) {
+  dismissKeyboard();
   const cat = CATEGORIES.find(c => c.id === catId);
   if (!cat) return;
   state.selectedCategory = cat;
@@ -460,6 +461,7 @@ function saveCurrentStep() {
 }
 
 function nextStep() {
+  dismissKeyboard();
   saveCurrentStep();
   if (state.currentStep < state.selectedCategory.steps.length - 1) {
     state.currentStep++;
@@ -469,6 +471,7 @@ function nextStep() {
 }
 
 function prevStep() {
+  dismissKeyboard();
   saveCurrentStep();
   if (state.currentStep > 0) { state.currentStep--; renderStep(); }
 }
@@ -488,6 +491,7 @@ function useScripture() {
    8. PREVIEW & CODE GENERATION
    ───────────────────────────────────────────── */
 function previewPrayer() {
+  dismissKeyboard();
   saveCurrentStep();
   const cat = state.selectedCategory;
   let allFilled = true;
@@ -503,6 +507,7 @@ function previewPrayer() {
 }
 
 function editPrayer() {
+  dismissKeyboard();
   document.getElementById('preview-section').classList.add('hidden');
   document.getElementById('builder-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -510,14 +515,31 @@ function editPrayer() {
 function generatePrayerCode() {
   const cat = state.selectedCategory;
   const fullPrayer = cat.steps.map(s => state.stepData[s.key].trim()).join(' ');
-  const code = generateCode(fullPrayer);
-  state.generatedCode = code;
+  const finalCode = generateCode(fullPrayer);
+  state.generatedCode = finalCode;
 
-  document.getElementById('code-number').textContent = code;
+  const codeEl = document.getElementById('code-number');
   document.getElementById('code-gematria-val').textContent = state.gematriaTotal;
   document.getElementById('code-section').classList.remove('hidden');
   document.getElementById('code-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  savePrayer(cat, code, fullPrayer);
+
+  // Scramble animation — random digits cycling before reveal
+  let iterations = 0;
+  const maxIterations = 30;
+  const interval = setInterval(() => {
+    codeEl.textContent = Array.from({length: Math.max(finalCode.length, 4)}, () =>
+      Math.floor(Math.random() * 10)).join('');
+    iterations++;
+    if (iterations >= maxIterations) {
+      clearInterval(interval);
+      codeEl.textContent = finalCode;
+      launchConfetti();
+      incrementPrayerCount();
+      updateStreak();
+    }
+  }, 55);
+
+  savePrayer(cat, finalCode, fullPrayer);
 }
 
 /* ─────────────────────────────────────────────
@@ -780,6 +802,79 @@ function initParticles() {
     requestAnimationFrame(draw);
   }
   draw();
+}
+
+/* ─────────────────────────────────────────────
+   13b. CONFETTI, STREAKS, MILESTONES
+   ───────────────────────────────────────────── */
+function launchConfetti() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#D4AF37','#F0D060','#A8D8EA','#7B5EA7','#64D8A4','#fff'];
+  const particles = Array.from({length: 100}, () => ({
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    vx: (Math.random() - 0.5) * 14,
+    vy: (Math.random() - 0.5) * 14 - 5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    size: Math.random() * 6 + 2,
+    life: 1
+  }));
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life -= 0.012;
+      if (p.life > 0) {
+        alive = true;
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    if (alive) requestAnimationFrame(animate);
+    else canvas.remove();
+  }
+  animate();
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const data = JSON.parse(localStorage.getItem('prayerStreak') || '{"count":0,"lastDate":""}');
+  const lastDate = data.lastDate ? new Date(data.lastDate).toDateString() : '';
+  if (lastDate === today) return data.count;
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  if (lastDate === yesterday.toDateString()) data.count++;
+  else data.count = 1;
+  data.lastDate = today;
+  localStorage.setItem('prayerStreak', JSON.stringify(data));
+  if (data.count > 1) toast('Prayer streak: ' + data.count + ' days');
+  return data.count;
+}
+
+function incrementPrayerCount() {
+  let count = parseInt(localStorage.getItem('totalPrayers') || '0') + 1;
+  localStorage.setItem('totalPrayers', String(count));
+  const milestones = [1, 5, 10, 25, 50, 100, 250, 500];
+  if (milestones.includes(count)) {
+    setTimeout(() => {
+      toast('Milestone: ' + count + ' prayers created', 4000);
+      launchConfetti();
+    }, 2000);
+  }
+  return count;
+}
+
+function dismissKeyboard() {
+  if (document.activeElement && document.activeElement !== document.body) {
+    document.activeElement.blur();
+  }
 }
 
 /* ─────────────────────────────────────────────

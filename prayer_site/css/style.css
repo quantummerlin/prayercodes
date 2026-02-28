@@ -8,16 +8,16 @@
   --gold: #D4AF37;
   --gold-light: #F0D060;
   --gold-dim: #A07820;
-  --purple-deep: #050210;
+  --purple-deep: #080416;
   --purple-mid: #1A0A35;
   --purple-rich: #3D1F6E;
   --purple-bright: #7B5EA7;
   --angel-blue: #A8D8EA;
   --white-soft: #F5F0E8;
   --white-glow: #FFFFFF;
-  --text-body: #D8CCEE;
-  --text-dim: #9080B0;
-  --card-bg: rgba(18, 8, 40, 0.78);
+  --text-body: #DDD0F0;
+  --text-dim: #A090C0;
+  --card-bg: rgba(20, 10, 44, 0.82);
   --card-border: rgba(212,175,55,0.18);
   --success: #64D8A4;
   --radius-lg: 18px;
@@ -46,12 +46,12 @@ body{
     radial-gradient(ellipse at 80% 20%,rgba(212,175,55,0.1) 0%,transparent 50%),
     radial-gradient(ellipse at 60% 80%,rgba(61,31,110,0.45) 0%,transparent 55%),
     url('../images/nebula-bg.jpeg') center/cover no-repeat;
-  filter:brightness(0.3) saturate(1.4);
+  filter:brightness(0.38) saturate(1.4);
 }
 #bg-stars{
   position:fixed;inset:0;z-index:1;
   background:url('../images/stars.png') repeat;
-  opacity:0.6;
+  opacity:0.7;
 }
 #bg-twinkle{
   position:fixed;inset:0;z-index:2;
@@ -68,6 +68,7 @@ body{
 #bg-rays{
   position:fixed;inset:0;z-index:4;
   background:
+    radial-gradient(ellipse at 50% -5%, rgba(212,175,55,0.08) 0%, transparent 55%),
     conic-gradient(from 270deg at 50% -10%,
       transparent 0deg,rgba(212,175,55,0.04) 10deg,transparent 20deg,
       rgba(212,175,55,0.06) 30deg,transparent 40deg,
