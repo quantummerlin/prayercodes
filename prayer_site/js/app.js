@@ -788,7 +788,33 @@ let state = {
   gematriaTotal: 0,
   audioPlaying: false,
   audioLoop: false,
+  lastPrayerText: '',
+  modalData: null,
 };
+
+/* ── Utility: escape HTML to prevent XSS ── */
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ── Share scripture quotes ── */
+const SHARE_SCRIPTURES = [
+  '"For where two or three are gathered together in my name, there am I in the midst of them." — Matthew 18:20',
+  '"The effectual fervent prayer of a righteous man availeth much." — James 5:16',
+  '"Ask, and it shall be given you; seek, and ye shall find." — Matthew 7:7',
+  '"Pray without ceasing." — 1 Thessalonians 5:17',
+  '"If my people shall humble themselves, and pray, I will heal their land." — 2 Chronicles 7:14',
+  '"Let us therefore come boldly unto the throne of grace." — Hebrews 4:16',
+];
+function randomShareScripture() {
+  return SHARE_SCRIPTURES[Math.floor(Math.random() * SHARE_SCRIPTURES.length)];
+}
+function getCategoryLabel() {
+  const cat = state.selectedCategory;
+  return (cat && cat.name && cat.name !== 'Custom Prayer') ? cat.name + ' ' : '';
+}
 
 /* ─────────────────────────────────────────────
    3. GEMATRIA
@@ -860,11 +886,79 @@ function selectCategory(catId) {
   document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
   document.querySelector(`[data-cat="${catId}"]`)?.classList.add('selected');
 
+  document.getElementById('custom-section').classList.add('hidden');
   document.getElementById('builder-section').classList.remove('hidden');
   document.getElementById('preview-section').classList.add('hidden');
   document.getElementById('code-section').classList.add('hidden');
   renderStep();
   document.getElementById('builder-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function selectCustomPrayer() {
+  dismissKeyboard();
+  state.selectedCategory = { id:'custom', icon:'hand', name:'Custom Prayer', verse:'', steps:[] };
+  state.currentStep = 0;
+  state.stepData = {};
+
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector('[data-cat="custom"]')?.classList.add('selected');
+
+  document.getElementById('builder-section').classList.add('hidden');
+  document.getElementById('preview-section').classList.add('hidden');
+  document.getElementById('code-section').classList.add('hidden');
+  document.getElementById('custom-section').classList.remove('hidden');
+
+  const input = document.getElementById('custom-input');
+  const cc = document.getElementById('custom-char-count');
+  if (input) {
+    input.value = '';
+    input.removeEventListener('input', updateCustomCharCount);
+    input.addEventListener('input', updateCustomCharCount);
+    if (cc) cc.textContent = '0 characters';
+  }
+  document.getElementById('custom-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateCustomCharCount() {
+  const input = document.getElementById('custom-input');
+  const cc = document.getElementById('custom-char-count');
+  if (input && cc) cc.textContent = input.value.length + ' characters';
+}
+
+function generateCustomCode() {
+  dismissKeyboard();
+  const input = document.getElementById('custom-input');
+  const fullPrayer = input ? input.value.trim() : '';
+  if (!fullPrayer) { toast('Please write your prayer before generating a code'); return; }
+
+  const cat = state.selectedCategory;
+  const finalCode = generateCode(fullPrayer);
+  state.generatedCode = finalCode;
+  state.lastPrayerText = fullPrayer;
+
+  document.getElementById('code-gematria-val').textContent = state.gematriaTotal;
+  document.getElementById('code-number').textContent = finalCode;
+  document.getElementById('code-section').classList.remove('hidden');
+  document.getElementById('code-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Scramble animation
+  const codeEl = document.getElementById('code-number');
+  let iterations = 0;
+  const maxIterations = 30;
+  const interval = setInterval(() => {
+    codeEl.textContent = Array.from({length: Math.max(finalCode.length, 4)}, () =>
+      Math.floor(Math.random() * 10)).join('');
+    iterations++;
+    if (iterations >= maxIterations) {
+      clearInterval(interval);
+      codeEl.textContent = finalCode;
+      launchConfetti();
+      incrementPrayerCount();
+      updateStreak();
+    }
+  }, 55);
+
+  savePrayer(cat, finalCode, fullPrayer);
 }
 
 function renderStep() {
@@ -989,6 +1083,7 @@ function generatePrayerCode() {
   const fullPrayer = previewEl.innerText.trim();
   const finalCode = generateCode(fullPrayer);
   state.generatedCode = finalCode;
+  state.lastPrayerText = fullPrayer;
 
   const codeEl = document.getElementById('code-number');
   document.getElementById('code-gematria-val').textContent = state.gematriaTotal;
@@ -1017,20 +1112,27 @@ function generatePrayerCode() {
 /* ─────────────────────────────────────────────
    9. SHARING
    ───────────────────────────────────────────── */
+function buildShareMessage(opts) {
+  const catLabel = getCategoryLabel();
+  const code = (opts && opts.code) || state.generatedCode || '';
+  const scripture = randomShareScripture();
+  return `My ${catLabel}Prayer Code: ${code}\n\n${scripture}\n\nThis code was generated through Prayer Codes — structured biblical prayers encoded through English Gematria.\n\nPray this code with me to amplify our connection to the throne of grace.\n\nCreate yours at prayer.quantummerlin.com\n\n#PrayerCodes #PrayWithMe #Faith`;
+}
+
 function copyCode() {
   if (!state.generatedCode) return;
-  navigator.clipboard.writeText(state.generatedCode).then(() => toast('Prayer Code copied'));
+  navigator.clipboard.writeText(state.generatedCode).then(() => toast('Prayer Code copied')).catch(() => toast('Could not copy — try manually'));
 }
 
 function copyPrayerMessage() {
   if (!state.generatedCode) return;
-  const msg = `My Prayer Code: ${state.generatedCode}\n\nThis code was generated through Prayer Codes — structured biblical prayers encoded through English Gematria.\n\nPray this code with me to amplify our connection to the throne of grace.\n\nCreate yours at prayer.quantummerlin.com\n\n#PrayerCodes #PrayWithMe #Faith`;
-  navigator.clipboard.writeText(msg).then(() => toast('Prayer message copied'));
+  const msg = buildShareMessage();
+  navigator.clipboard.writeText(msg).then(() => toast('Prayer message copied')).catch(() => toast('Could not copy — try manually'));
 }
 
 function shareWhatsApp() {
-  const msg = `My Prayer Code: ${state.generatedCode}%0A%0AThis code was generated through Prayer Codes — structured biblical prayers encoded through English Gematria.%0A%0APray this code with me. Create yours at prayer.quantummerlin.com`;
-  window.open('https://wa.me/?text=' + msg, '_blank');
+  const msg = buildShareMessage();
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
 }
 
 function shareFacebook() {
@@ -1038,15 +1140,25 @@ function shareFacebook() {
 }
 
 function shareTwitter() {
-  const msg = `My Prayer Code: ${state.generatedCode} — Structured biblical prayer encoded through Gematria. Pray with me. prayer.quantummerlin.com #PrayerCodes`;
+  const catLabel = getCategoryLabel();
+  const msg = `My ${catLabel}Prayer Code: ${state.generatedCode} — Structured biblical prayer encoded through Gematria. Pray with me. prayer.quantummerlin.com #PrayerCodes`;
   window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function shareEmail() {
+  const catLabel = getCategoryLabel();
+  const code = state.generatedCode || '';
+  const subject = encodeURIComponent(`Pray With Me — ${catLabel}Prayer Code: ${code}`);
+  const body = encodeURIComponent(buildShareMessage());
+  window.open(`mailto:?subject=${subject}&body=${body}`);
 }
 
 function nativeShare() {
   if (!navigator.share || !state.generatedCode) return;
+  const catLabel = getCategoryLabel();
   navigator.share({
-    title: 'My Prayer Code: ' + state.generatedCode,
-    text: `My Prayer Code: ${state.generatedCode}\n\nStructured biblical prayer encoded through English Gematria. Pray this code with me to amplify our connection to Heaven.`,
+    title: `My ${catLabel}Prayer Code: ` + state.generatedCode,
+    text: buildShareMessage(),
     url: 'https://prayer.quantummerlin.com'
   }).catch(() => {});
 }
@@ -1223,15 +1335,15 @@ function renderJournal() {
   }
 
   container.innerHTML = journal.map((entry, i) => `
-    <div class="journal-entry ${entry.answered ? 'answered' : ''}">
+    <div class="journal-entry ${entry.answered ? 'answered' : ''}" onclick="openPrayerModal(${i})" style="cursor:pointer;">
       <div class="journal-top">
         <span class="journal-code">${icon(entry.icon || 'pray','journal-icon')} ${entry.code}</span>
         <span class="journal-date">${entry.date}</span>
       </div>
-      <div class="journal-cat">${entry.category}</div>
-      <div class="journal-preview">${entry.text}</div>
+      <div class="journal-cat">${escapeHTML(entry.category)}</div>
+      <div class="journal-preview">${escapeHTML(entry.text)}</div>
       ${entry.answered ? '<div class="answered-badge">${icon("cross","badge-icon")} Prayer Answered</div>' : ''}
-      <div class="journal-actions">
+      <div class="journal-actions" onclick="event.stopPropagation()">
         ${!entry.answered ? `<button class="btn btn-outline" onclick="markAnswered(${i})">Mark Answered</button>` : ''}
         <button class="btn btn-ghost" onclick="copyJournalCode(${i})">Copy Code</button>
         <button class="btn btn-ghost" onclick="deleteJournalEntry(${i})">Remove</button>
@@ -1271,6 +1383,101 @@ function clearAllJournal() {
   if (!confirm('Clear all ' + journal.length + ' entries from your prayer journal? This cannot be undone.')) return;
   localStorage.removeItem('prayerJournal');
   renderJournal(); updatePrayerStats(); toast('Journal cleared');
+}
+
+/* ── Fullscreen Prayer Modal ── */
+function openPrayerModal(idxOrData) {
+  let data;
+  if (typeof idxOrData === 'number') {
+    const journal = getJournal();
+    data = journal[idxOrData];
+  } else if (typeof idxOrData === 'object') {
+    data = idxOrData;
+  }
+  if (!data) return;
+  state.modalData = data;
+  document.getElementById('modal-code').textContent = data.code;
+  document.getElementById('modal-category').textContent = data.category;
+  document.getElementById('modal-text').textContent = data.text;
+  document.getElementById('modal-date').textContent = data.date;
+  // Reset share buttons and privacy toggle each time
+  const shareBtns = document.getElementById('modal-share-btns');
+  if (shareBtns) shareBtns.classList.add('hidden');
+  const textEl = document.getElementById('modal-text');
+  const dividerEl = document.querySelector('.prayer-modal-divider');
+  if (textEl) textEl.classList.remove('prayer-hidden');
+  if (dividerEl) dividerEl.classList.remove('prayer-hidden');
+  const privBtn = document.getElementById('modal-privacy-toggle');
+  if (privBtn) { privBtn.classList.remove('active'); privBtn.querySelector('svg').style.display = ''; }
+  const hint = document.getElementById('modal-hint');
+  if (hint) { hint.style.opacity = '1'; setTimeout(() => { hint.style.opacity = '0'; }, 3500); }
+  const modal = document.getElementById('prayer-modal');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function openScreenshotModal() {
+  if (!state.generatedCode || !state.selectedCategory) return;
+  openPrayerModal({
+    code: state.generatedCode,
+    category: state.selectedCategory.name || 'Prayer',
+    text: state.lastPrayerText || '',
+    date: new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+  });
+}
+
+function closePrayerModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('prayer-modal-close')) return;
+  const modal = document.getElementById('prayer-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  state.modalData = null;
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePrayerModal();
+});
+
+/* ── Modal Share Actions ── */
+function toggleModalShare(e) {
+  if (e) e.stopPropagation();
+  const btns = document.getElementById('modal-share-btns');
+  if (btns) btns.classList.toggle('hidden');
+}
+function togglePrayerPrivacy(e) {
+  if (e) e.stopPropagation();
+  const textEl = document.getElementById('modal-text');
+  const dividerEl = document.querySelector('.prayer-modal-divider');
+  const btn = document.getElementById('modal-privacy-toggle');
+  if (!textEl) return;
+  const isHidden = textEl.classList.toggle('prayer-hidden');
+  if (dividerEl) dividerEl.classList.toggle('prayer-hidden', isHidden);
+  if (btn) btn.classList.toggle('active', isHidden);
+}
+function copyModalCode(e) {
+  if (e) e.stopPropagation();
+  if (!state.modalData) return;
+  navigator.clipboard.writeText(state.modalData.code).then(() => toast('Prayer Code copied')).catch(() => toast('Could not copy'));
+}
+function copyModalMessage(e) {
+  if (e) e.stopPropagation();
+  if (!state.modalData) return;
+  const msg = buildShareMessage({ code: state.modalData.code });
+  navigator.clipboard.writeText(msg).then(() => toast('Prayer message copied')).catch(() => toast('Could not copy'));
+}
+function shareModalWhatsApp(e) {
+  if (e) e.stopPropagation();
+  if (!state.modalData) return;
+  const msg = buildShareMessage({ code: state.modalData.code });
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+function shareModalEmail(e) {
+  if (e) e.stopPropagation();
+  if (!state.modalData) return;
+  const code = state.modalData.code;
+  const cat = state.modalData.category || 'Prayer';
+  const subject = encodeURIComponent(`Pray With Me — ${cat} Code: ${code}`);
+  const body = encodeURIComponent(buildShareMessage({ code }));
+  window.open(`mailto:?subject=${subject}&body=${body}`);
 }
 
 /* ─────────────────────────────────────────────
@@ -1375,7 +1582,17 @@ function incrementPrayerCount() {
   const milestones = [1, 5, 10, 25, 50, 100, 250, 500];
   if (milestones.includes(count)) {
     setTimeout(() => {
-      toast('Milestone: ' + count + ' prayers created', 4000);
+      const msgs = {
+        1: 'Your first prayer code — share it with someone you love',
+        5: '5 prayers encoded! Share your journey with others',
+        10: '10 prayers — your faith is growing. Invite someone to pray with you',
+        25: '25 prayers! You’re building a powerful habit of faith',
+        50: '50 prayers encoded — you are a prayer warrior',
+        100: '100 prayers! Your dedication is a testimony. Share it',
+        250: '250 prayers — your commitment inspires. Spread the word',
+        500: '500 prayers encoded. You are a pillar of faith',
+      };
+      toast(msgs[count] || 'Milestone: ' + count + ' prayers created', 5000);
       launchConfetti();
     }, 2000);
   }
@@ -1398,6 +1615,7 @@ function newPrayer() {
   document.getElementById('builder-section').classList.add('hidden');
   document.getElementById('preview-section').classList.add('hidden');
   document.getElementById('code-section').classList.add('hidden');
+  document.getElementById('custom-section').classList.add('hidden');
   navigate('home');
 }
 
