@@ -39,8 +39,8 @@ const CATEGORIES = [
     steps:[
       { key:'adoration', title:'Adoration — Honour the Father', icon:'crown',
         guidance:'Begin by honouring the Almighty. Acknowledge His holiness, His sovereignty, and His everlasting love.',
-        scripture:{text:'Hallowed be thy name. Thy kingdom come.',ref:'Matthew 6:9-10'},
-        placeholder:'Heavenly Father, You are holy and sovereign over all things. I honour Your name above every name…'},
+        scripture:{text:'Our Father which art in heaven, Hallowed be thy name. Thy kingdom come.',ref:'Matthew 6:9-10'},
+        placeholder:'Our Father, who art in heaven, hallowed be Your name. You are holy and sovereign over all things. I honour Your name above every name…'},
       { key:'align', title:'Alignment — Thy Will Be Done', icon:'light',
         guidance:'Surrender your will to the perfect plan of the Most High. Seek His kingdom above all earthly desires.',
         scripture:{text:'Thy will be done in earth, as it is in heaven.',ref:'Matthew 6:10'},
