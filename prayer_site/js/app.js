@@ -1342,7 +1342,7 @@ function renderJournal() {
       </div>
       <div class="journal-cat">${escapeHTML(entry.category)}</div>
       <div class="journal-preview">${escapeHTML(entry.text)}</div>
-      ${entry.answered ? '<div class="answered-badge">${icon("cross","badge-icon")} Prayer Answered</div>' : ''}
+      ${entry.answered ? `<div class="answered-badge">${icon("cross","badge-icon")} Prayer Answered</div>` : ''}
       <div class="journal-actions" onclick="event.stopPropagation()">
         ${!entry.answered ? `<button class="btn btn-outline" onclick="markAnswered(${i})">Mark Answered</button>` : ''}
         <button class="btn btn-ghost" onclick="copyJournalCode(${i})">Copy Code</button>
