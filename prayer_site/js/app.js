@@ -1060,11 +1060,8 @@ function previewPrayer() {
   if (!allFilled) { toast('Please complete all sections of your prayer'); return; }
 
   const previewEl = document.getElementById('preview-text');
-  previewEl.innerHTML = cat.steps.map((s, i) => {
-    const text = escapeHTML(state.stepData[s.key].trim());
-    const title = escapeHTML(s.title.replace(/ — .*/, ''));
-    return `<div class="preview-section${i > 0 ? ' preview-section-spaced' : ''}"><div class="preview-section-title">${title}</div><div class="preview-section-body">${text}</div></div>`;
-  }).join('');
+  const lines = cat.steps.map(s => state.stepData[s.key].trim());
+  previewEl.textContent = lines.join('\n\n');
   previewEl.setAttribute('contenteditable', 'true');
   document.getElementById('preview-section').classList.remove('hidden');
   setTimeout(() => {
