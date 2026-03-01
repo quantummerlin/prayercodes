@@ -60,7 +60,7 @@ const CATEGORIES = [
       { key:'closing', title:'Closing — The Kingdom, Power, and Glory', icon:'cross',
         guidance:'Seal your prayer with a declaration of God\'s eternal kingdom, power, and glory.',
         scripture:{text:'For thine is the kingdom, and the power, and the glory, for ever. Amen.',ref:'Matthew 6:13'},
-        placeholder:'For Yours is the kingdom, and the power, and the glory, for ever and ever. Amen.'}
+        placeholder:'For Yours is the kingdom, and the power, and the glory, for ever. Amen.'}
     ]
   },
   {
@@ -208,27 +208,27 @@ const CATEGORIES = [
   {
     id:'spiritual_warfare', icon:'shield', name:'Spiritual Warfare', verse:'Ephesians 6:11',
     steps:[
-      { key:'authority', title:'Declaration of Authority',
+      { key:'authority', title:'Declaration of Authority', icon:'bolt',
         guidance:'Declare the authority you have been given in Christ. You stand in the power of the risen King.',
         scripture:{text:'Behold, I give unto you power to tread on serpents and scorpions, and over all the power of the enemy: and nothing shall by any means hurt you.',ref:'Luke 10:19'},
         placeholder:'In the name of Jesus Christ, I declare that I have been given authority over all the power of the enemy...'},
-      { key:'identify', title:'Identify the Battle',
+      { key:'identify', title:'Identify the Battle', icon:'search',
         guidance:'Name the spiritual battle you face. Your struggle is not against flesh and blood.',
         scripture:{text:'For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world, against spiritual wickedness in high places.',ref:'Ephesians 6:12'},
         placeholder:'Lord, I recognise that this battle is not of flesh and blood. I identify the work of the enemy...'},
-      { key:'armor', title:'Put on the Armor of God',
+      { key:'armor', title:'Put on the Armor of God', icon:'shield',
         guidance:'Deliberately put on each piece of the armor of God \u2014 truth, righteousness, gospel, faith, salvation, the Word.',
         scripture:{text:'Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.',ref:'Ephesians 6:11'},
-        placeholder:'I gird my loins with truth. I put on the breastplate of righteousness. I shod my feet with the gospel of peace. I take up the shield of faith...'},
-      { key:'sword', title:'Wield the Sword of the Spirit',
+        placeholder:'I gird my loins with truth. I put on the breastplate of righteousness. My feet are shod with the gospel of peace. I take up the shield of faith and the helmet of salvation...'},
+      { key:'sword', title:'Wield the Sword of the Spirit', icon:'scroll',
         guidance:'The Word of God is your offensive weapon. Speak scripture against every lie and scheme.',
         scripture:{text:'And take the helmet of salvation, and the sword of the Spirit, which is the word of God.',ref:'Ephesians 6:17'},
         placeholder:'It is written: no weapon formed against me shall prosper. It is written: greater is He that is in me than he that is in the world...'},
-      { key:'stand', title:'Stand Firm',
+      { key:'stand', title:'Stand Firm', icon:'star',
         guidance:'Having done all, stand. Refuse to retreat. Plant your feet on the promises of God.',
         scripture:{text:'Wherefore take unto you the whole armour of God, that ye may be able to withstand in the evil day, and having done all, to stand.',ref:'Ephesians 6:13'},
         placeholder:'I have done all that You have asked, O Lord. Now I stand firm. I will not retreat. I will not be moved...'},
-      { key:'victory', title:'Victory Declaration',
+      { key:'victory', title:'Victory Declaration', icon:'cross',
         guidance:'Declare the victory already won through the blood of Jesus Christ.',
         scripture:{text:'Nay, in all these things we are more than conquerors through him that loved us.',ref:'Romans 8:37'},
         placeholder:'I am more than a conqueror through Christ who loved me. The victory is won. The enemy is defeated. Amen.'}
@@ -237,23 +237,23 @@ const CATEGORIES = [
   {
     id:'intercession', icon:'hand', name:'Intercession', verse:'1 Timothy 2:1',
     steps:[
-      { key:'heart', title:'God\'s Heart for People',
+      { key:'heart', title:'God\'s Heart for People', icon:'heart',
         guidance:'Acknowledge the heart of the Father for all people. He desires that none should perish.',
         scripture:{text:'I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men.',ref:'1 Timothy 2:1'},
         placeholder:'Father, Your heart breaks for Your children. You desire that none should perish. I come before You now with Your heart for others...'},
-      { key:'identify_person', title:'Who You Are Praying For',
+      { key:'identify_person', title:'Who You Are Praying For', icon:'hand',
         guidance:'Name the person or people you are interceding for. Bring them before the throne by name.',
         scripture:{text:'And he saw that there was no man, and wondered that there was no intercessor.',ref:'Isaiah 59:16'},
         placeholder:'Lord, I stand in the gap for those on my heart. I bring them before Your throne of grace by name...'},
-      { key:'needs', title:'Lift Their Specific Needs',
+      { key:'needs', title:'Lift Their Specific Needs', icon:'scroll',
         guidance:'Present their needs with faith. Be specific, earnest, and persistent.',
         scripture:{text:'The effectual fervent prayer of a righteous man availeth much.',ref:'James 5:16'},
         placeholder:'Lord, I lift up their needs. Where there is sickness, bring healing. Where there is lack, bring provision. Where there is confusion, bring clarity...'},
-      { key:'protect', title:'Pray Protection Over Them',
+      { key:'protect', title:'Pray Protection Over Them', icon:'shield',
         guidance:'Cover them with the Lord\'s protection \u2014 their lives, families, minds, and spirits.',
         scripture:{text:'The LORD shall preserve thy going out and thy coming in from this time forth, and even for evermore.',ref:'Psalm 121:8'},
         placeholder:'I pray a hedge of protection around them. Guard their coming and going. Protect their minds, bodies, and spirits...'},
-      { key:'declare', title:'Declare God\'s Promises',
+      { key:'declare', title:'Declare God\'s Promises', icon:'cross',
         guidance:'Speak the promises of God over their lives. His Word does not return void.',
         scripture:{text:'So shall my word be that goeth forth out of my mouth: it shall not return unto me void, but it shall accomplish that which I please.',ref:'Isaiah 55:11'},
         placeholder:'I declare over them that You have plans to prosper them and not to harm them. Your Word accomplishes its purpose. Amen.'}
@@ -262,23 +262,23 @@ const CATEGORIES = [
   {
     id:'forgiveness', icon:'heart', name:'Forgiveness', verse:'Ephesians 4:32',
     steps:[
-      { key:'mercy', title:'Acknowledge God\'s Mercy',
+      { key:'mercy', title:'Acknowledge God\'s Mercy', icon:'heart',
         guidance:'Remember the immeasurable mercy God has shown you. Before you forgive others, stand in awe of how much you have been forgiven.',
         scripture:{text:'But God, who is rich in mercy, for his great love wherewith he loved us, Even when we were dead in sins, hath quickened us together with Christ.',ref:'Ephesians 2:4-5'},
         placeholder:'Father, I stand in awe of Your mercy. When I was yet a sinner, You loved me. Your mercy is new every morning...'},
-      { key:'identify_person', title:'Who You Need to Forgive',
+      { key:'identify_person', title:'Who You Need to Forgive', icon:'scroll',
         guidance:'Bring before the Lord those who have wronged you. Lay it honestly before the Father.',
         scripture:{text:'For if ye forgive men their trespasses, your heavenly Father will also forgive you.',ref:'Matthew 6:14'},
         placeholder:'Lord, I bring before You the hurt that was caused. I do not hide it \u2014 I lay it at Your feet...'},
-      { key:'release', title:'Release Bitterness',
+      { key:'release', title:'Release Bitterness', icon:'flame',
         guidance:'Choose by an act of your will to release all bitterness, anger, and resentment. This is a decision of obedience.',
         scripture:{text:'Let all bitterness, and wrath, and anger, and clamour, and evil speaking, be put away from you, with all malice.',ref:'Ephesians 4:31'},
         placeholder:'By an act of my will, I release all bitterness, all anger, and all resentment. I choose to forgive as Christ has forgiven me...'},
-      { key:'bless', title:'Pray Blessing Over Them',
+      { key:'bless', title:'Pray Blessing Over Them', icon:'hand',
         guidance:'Go beyond releasing \u2014 pray blessing over those who wronged you. This is the way of Christ.',
         scripture:{text:'But I say unto you, Love your enemies, bless them that curse you, do good to them that hate you.',ref:'Matthew 5:44'},
         placeholder:'Lord, I pray Your blessing over them. Open their eyes to Your love. Draw them closer to You...'},
-      { key:'peace', title:'Receive God\'s Peace',
+      { key:'peace', title:'Receive God\'s Peace', icon:'cross',
         guidance:'Having forgiven, receive the peace only God can give. Let His peace flood your heart.',
         scripture:{text:'And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ\'s sake hath forgiven you.',ref:'Ephesians 4:32'},
         placeholder:'I receive Your peace now, O Lord. Where there was a wound, pour in Your healing oil. I am free. Amen.'}
@@ -287,23 +287,23 @@ const CATEGORIES = [
   {
     id:'praise_worship', icon:'crown', name:'Praise & Worship', verse:'Psalm 150:6',
     steps:[
-      { key:'nature', title:'Declare God\'s Nature',
+      { key:'nature', title:'Declare God\'s Nature', icon:'crown',
         guidance:'Declare who God is \u2014 His holiness, His majesty, His unchanging nature. Worship is about who He is.',
         scripture:{text:'Holy, holy, holy, is the Lord of hosts: the whole earth is full of his glory.',ref:'Isaiah 6:3'},
         placeholder:'Holy, holy, holy are You, Lord God Almighty. You are the Alpha and Omega, the Beginning and the End...'},
-      { key:'remember', title:'Remember His Works',
+      { key:'remember', title:'Remember His Works', icon:'star',
         guidance:'Recall the mighty works of the Lord \u2014 in scripture and in your own life.',
         scripture:{text:'Remember his marvellous works that he hath done; his wonders, and the judgments of his mouth.',ref:'Psalm 105:5'},
         placeholder:'I remember how You parted the Red Sea, how You shut the mouths of lions. And in my own life, Your works are marvellous...'},
-      { key:'exalt', title:'Exalt His Name',
+      { key:'exalt', title:'Exalt His Name', icon:'light',
         guidance:'Lift the name of the Lord above every other name. Exalt Him with your words.',
         scripture:{text:'Be thou exalted, LORD, in thine own strength: so will we sing and praise thy power.',ref:'Psalm 21:13'},
         placeholder:'I exalt Your name above every name. Above every circumstance, every fear, every trial \u2014 Your name is higher...'},
-      { key:'surrender', title:'Surrender in Worship',
+      { key:'surrender', title:'Surrender in Worship', icon:'pray',
         guidance:'Let worship become surrender. Lay down your agenda, your burdens, your pride.',
         scripture:{text:'O come, let us worship and bow down: let us kneel before the LORD our maker.',ref:'Psalm 95:6'},
         placeholder:'I bow before You, my King. I lay down everything. In this moment, I am Yours completely...'},
-      { key:'worthy', title:'Declare His Worthiness',
+      { key:'worthy', title:'Declare His Worthiness', icon:'cross',
         guidance:'Declare that the Lord alone is worthy of all praise, all honour, and all glory.',
         scripture:{text:'Let every thing that hath breath praise the LORD. Praise ye the LORD.',ref:'Psalm 150:6'},
         placeholder:'You alone are worthy, O Lord. Worthy of all praise, all honour, all glory. I will praise You all the days of my life. Amen.'}
@@ -312,23 +312,23 @@ const CATEGORIES = [
   {
     id:'peace_anxiety', icon:'dove', name:'Peace & Anxiety', verse:'Philippians 4:6-7',
     steps:[
-      { key:'bring', title:'Bring Your Worries to God',
+      { key:'bring', title:'Bring Your Worries to God', icon:'pray',
         guidance:'Do not carry the weight alone. Pour out every anxious thought before the Lord.',
         scripture:{text:'Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.',ref:'Philippians 4:6'},
         placeholder:'Father, my heart is heavy and my mind is restless. I bring before You every anxious thought, every worry, every fear...'},
-      { key:'cast', title:'Cast Your Cares',
+      { key:'cast', title:'Cast Your Cares', icon:'hand',
         guidance:'Release the weight. Transfer the burden from your shoulders to the Lord\'s mighty hands.',
         scripture:{text:'Casting all your care upon him; for he careth for you.',ref:'1 Peter 5:7'},
         placeholder:'Lord, I cast every care upon You now. I release the anxiety. I transfer the weight to Your mighty hands...'},
-      { key:'remember', title:'Remember His Faithfulness',
+      { key:'remember', title:'Remember His Faithfulness', icon:'star',
         guidance:'Anchor your soul in the faithfulness of God. He has never failed.',
         scripture:{text:'The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul.',ref:'Psalm 23:1-3'},
         placeholder:'You have never failed me, O Lord. In every trial, You were there. I anchor my soul in Your faithfulness...'},
-      { key:'receive', title:'Receive His Peace',
+      { key:'receive', title:'Receive His Peace', icon:'dove',
         guidance:'Open your heart to receive the supernatural peace of God \u2014 peace that surpasses understanding.',
         scripture:{text:'And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.',ref:'Philippians 4:7'},
         placeholder:'I receive Your peace now, Lord. Not the peace the world gives, but Your supernatural peace. Guard my heart. Guard my mind...'},
-      { key:'trust', title:'Trust Declaration',
+      { key:'trust', title:'Trust Declaration', icon:'cross',
         guidance:'Seal your prayer with a bold declaration of trust. You will not be ruled by fear.',
         scripture:{text:'Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee.',ref:'Isaiah 26:3'},
         placeholder:'I will not be ruled by fear. My mind is stayed on You, O Lord, and You keep me in perfect peace. Amen.'}
@@ -1059,9 +1059,12 @@ function previewPrayer() {
   }
   if (!allFilled) { toast('Please complete all sections of your prayer'); return; }
 
-  const lines = cat.steps.map(s => state.stepData[s.key].trim());
   const previewEl = document.getElementById('preview-text');
-  previewEl.textContent = lines.join('\n\n');
+  previewEl.innerHTML = cat.steps.map((s, i) => {
+    const text = escapeHTML(state.stepData[s.key].trim());
+    const title = escapeHTML(s.title.replace(/ — .*/, ''));
+    return `<div class="preview-section${i > 0 ? ' preview-section-spaced' : ''}"><div class="preview-section-title">${title}</div><div class="preview-section-body">${text}</div></div>`;
+  }).join('');
   previewEl.setAttribute('contenteditable', 'true');
   document.getElementById('preview-section').classList.remove('hidden');
   setTimeout(() => {
