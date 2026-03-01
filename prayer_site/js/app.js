@@ -1408,12 +1408,21 @@ function openPrayerModal(idxOrData) {
   if (textEl) textEl.classList.remove('prayer-hidden');
   if (dividerEl) dividerEl.classList.remove('prayer-hidden');
   const privBtn = document.getElementById('modal-privacy-toggle');
-  if (privBtn) { privBtn.classList.remove('active'); privBtn.querySelector('svg').style.display = ''; }
+  if (privBtn) {
+    privBtn.classList.remove('active');
+    privBtn.querySelector('svg').style.display = '';
+    const btnText = privBtn.childNodes[privBtn.childNodes.length - 1];
+    if (btnText) btnText.textContent = ' Hide Prayer';
+  }
+  const placeholder = document.getElementById('modal-hidden-placeholder');
+  if (placeholder) placeholder.classList.remove('visible');
   const hint = document.getElementById('modal-hint');
   if (hint) { hint.style.opacity = '1'; setTimeout(() => { hint.style.opacity = '0'; }, 3500); }
   const modal = document.getElementById('prayer-modal');
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  const btt = document.getElementById('back-to-top');
+  if (btt) btt.style.display = 'none';
 }
 
 function openScreenshotModal() {
@@ -1431,6 +1440,8 @@ function closePrayerModal(e) {
   const modal = document.getElementById('prayer-modal');
   modal.classList.remove('active');
   document.body.style.overflow = '';
+  const btt = document.getElementById('back-to-top');
+  if (btt) btt.style.display = '';
   state.modalData = null;
 }
 document.addEventListener('keydown', function(e) {
@@ -1448,10 +1459,16 @@ function togglePrayerPrivacy(e) {
   const textEl = document.getElementById('modal-text');
   const dividerEl = document.querySelector('.prayer-modal-divider');
   const btn = document.getElementById('modal-privacy-toggle');
+  const placeholder = document.getElementById('modal-hidden-placeholder');
   if (!textEl) return;
   const isHidden = textEl.classList.toggle('prayer-hidden');
   if (dividerEl) dividerEl.classList.toggle('prayer-hidden', isHidden);
-  if (btn) btn.classList.toggle('active', isHidden);
+  if (btn) {
+    btn.classList.toggle('active', isHidden);
+    const btnText = btn.childNodes[btn.childNodes.length - 1];
+    if (btnText) btnText.textContent = isHidden ? ' Show Prayer' : ' Hide Prayer';
+  }
+  if (placeholder) placeholder.classList.toggle('visible', isHidden);
 }
 function copyModalCode(e) {
   if (e) e.stopPropagation();

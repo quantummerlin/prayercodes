@@ -772,6 +772,30 @@ li{margin-bottom:0.35rem;font-size:0.9rem}
   transition:opacity 0.3s ease, max-height 0.4s ease;
 }
 
+/* ── Hidden Prayer Decorative Placeholder ── */
+.prayer-hidden-placeholder{
+  display:none;
+  text-align:center;padding:1.5rem 1rem;
+  animation:fadeIn 0.5s ease both;
+}
+.prayer-hidden-placeholder .hidden-icon{
+  display:block;margin:0 auto 0.8rem;
+  width:36px;height:36px;opacity:0.4;
+  color:var(--gold-dim);
+}
+.prayer-hidden-placeholder .hidden-msg{
+  font-family:'Cinzel',serif;font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--text-dim);opacity:0.5;
+  line-height:1.6;
+}
+.prayer-hidden-placeholder .hidden-verse{
+  font-family:'Lato',sans-serif;font-size:0.7rem;
+  font-style:italic;color:var(--gold-dim);opacity:0.4;
+  margin-top:0.6rem;
+}
+.prayer-hidden-placeholder.visible{display:block}
+
 .share-btn-mini{
   width:42px;height:42px;border-radius:50%;
   background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.18);
