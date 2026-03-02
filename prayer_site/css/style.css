@@ -594,6 +594,94 @@ body{
 }
 .footer-coffee-divider{display:none}
 
+/* ── BMC Nudge (after prayer code) ── */
+.bmc-nudge{
+  margin-top:1.5rem;padding-top:1rem;
+  border-top:1px solid rgba(212,175,55,0.08);
+  text-align:center;
+}
+.bmc-nudge p{
+  font-family:'Lato',sans-serif;font-size:0.72rem;
+  color:var(--text-dim);line-height:1.6;
+  opacity:0.75;
+}
+.bmc-nudge a{
+  color:var(--gold);text-decoration:none;
+  border-bottom:1px dotted rgba(212,175,55,0.3);
+  transition:var(--transition);
+}
+.bmc-nudge a:hover{
+  color:var(--gold-light);border-bottom-color:var(--gold);
+}
+
+/* ── About Page ── */
+.about-content{
+  text-align:left;margin-top:1.5rem;
+}
+.about-content p{
+  font-family:'Lato',sans-serif;font-size:0.88rem;
+  color:var(--text-body);line-height:1.8;
+  margin-bottom:1rem;
+}
+.about-heading{
+  font-family:'Cinzel',serif;font-size:0.95rem;
+  color:var(--gold);letter-spacing:0.08em;
+  margin:1.8rem 0 0.6rem;
+}
+.about-verse{
+  text-align:center;padding:1.2rem;margin:1rem 0;
+  background:rgba(212,175,55,0.04);
+  border-left:2px solid rgba(212,175,55,0.3);
+  border-radius:0 var(--radius-md) var(--radius-md) 0;
+}
+.about-verse em{
+  font-family:'Lato',sans-serif;font-size:0.88rem;
+  color:var(--gold-light);line-height:1.6;
+  display:block;
+}
+.about-verse .scripture-ref{
+  font-size:0.72rem;color:var(--text-dim);
+  display:block;margin-top:0.4rem;
+}
+.about-list{
+  list-style:none;padding:0;margin:0.8rem 0 1.2rem;
+}
+.about-list li{
+  font-family:'Lato',sans-serif;font-size:0.88rem;
+  color:var(--text-body);line-height:1.8;
+  padding:0.6rem 0 0.6rem 1.4rem;
+  position:relative;
+}
+.about-list li::before{
+  content:'✝';position:absolute;left:0;
+  color:var(--gold-dim);font-size:0.7rem;top:0.75rem;
+}
+.about-list li strong{
+  color:var(--gold);
+}
+.about-coffee-card{
+  text-align:center;margin:1.5rem 0;padding:1.5rem 1.2rem;
+  background:linear-gradient(165deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.03) 100%);
+  border:1px solid rgba(212,175,55,0.25);
+  border-radius:var(--radius-lg);
+  box-shadow:0 0 30px rgba(212,175,55,0.06), 0 8px 24px rgba(0,0,0,0.3);
+  position:relative;overflow:hidden;
+}
+.about-coffee-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity:0.5;
+}
+.about-coffee-icon{
+  display:block;margin:0 auto 0.8rem;
+  width:32px;height:32px;color:var(--gold);opacity:0.8;
+}
+.about-coffee-msg{
+  font-family:'Lato',sans-serif;font-size:0.82rem;
+  color:rgba(255,255,255,0.8);line-height:1.7;
+  max-width:380px;margin:0 auto 1.2rem;
+}
+
 /* ── Inline SVG Icons ── */
 .icon {
   display:inline-flex;align-items:center;justify-content:center;
