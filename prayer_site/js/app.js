@@ -835,20 +835,8 @@ function generateCode(text, len = 6) {
 }
 
 /* ─────────────────────────────────────────────
-   4. NAVIGATION
+   4. NAVIGATION — see enhanced version in section 16
    ───────────────────────────────────────────── */
-function navigate(page) {
-  state.currentPage = page;
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const el = document.getElementById('page-' + page);
-  if (el) el.classList.add('active');
-  const btn = document.querySelector(`[data-page="${page}"]`);
-  if (btn) btn.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (page === 'scripture') renderScriptures();
-  if (page === 'journal') renderJournal();
-}
 
 /* ─────────────────────────────────────────────
    5. TOAST
@@ -1760,14 +1748,114 @@ function initBackToTop() {
 /* ─────────────────────────────────────────────
    16. INIT
    ───────────────────────────────────────────── */
+
+/* ── Apple-style staggered card entrance ── */
+function initStaggeredAnimations() {
+  const catCards = document.querySelectorAll('.cat-card');
+  catCards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px) scale(0.95)';
+    card.style.transition = `all 0.5s cubic-bezier(0.34,1.56,0.64,1) ${i * 0.06}s`;
+    setTimeout(() => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0) scale(1)';
+    }, 80);
+  });
+}
+
+/* ── Smooth intersection observer for scroll-reveal ── */
+function initScrollReveal() {
+  if (!('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0) scale(1)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.card, .how-step, .scripture, .daily-banner').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px) scale(0.98)';
+    el.style.transition = 'all 0.6s cubic-bezier(0.16,1,0.3,1)';
+    observer.observe(el);
+  });
+}
+
+/* ── Button ripple effect (Apple haptic feel) ── */
+function initRippleEffect() {
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn, .share-btn, .nav-btn, .cat-card');
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    const size = Math.max(rect.width, rect.height) * 2;
+    ripple.style.cssText = `
+      position:absolute;border-radius:50%;pointer-events:none;
+      width:${size}px;height:${size}px;
+      left:${e.clientX - rect.left - size / 2}px;
+      top:${e.clientY - rect.top - size / 2}px;
+      background:radial-gradient(circle,rgba(212,175,55,0.2),transparent 70%);
+      transform:scale(0);animation:ripple 0.6s ease-out forwards;
+    `;
+    if (getComputedStyle(btn).position === 'static') btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 700);
+  });
+}
+
+/* ── Smooth page transition ── */
+const _origNavigate = typeof navigate === 'function' ? navigate : null;
+function navigate(page) {
+  state.currentPage = page;
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(p => {
+    if (p.classList.contains('active')) {
+      p.style.opacity = '0';
+      p.style.transform = 'translateY(10px)';
+      setTimeout(() => {
+        p.classList.remove('active');
+        p.style.opacity = '';
+        p.style.transform = '';
+      }, 200);
+    }
+  });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`[data-page="${page}"]`);
+  if (btn) btn.classList.add('active');
+  setTimeout(() => {
+    const el = document.getElementById('page-' + page);
+    if (el) {
+      el.classList.add('active');
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(15px)';
+      requestAnimationFrame(() => {
+        el.style.transition = 'all 0.5s cubic-bezier(0.16,1,0.3,1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (page === 'scripture') renderScriptures();
+    if (page === 'journal') renderJournal();
+    if (page === 'home') setTimeout(initStaggeredAnimations, 150);
+  }, 220);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   setDailyScripture();
   initParticles();
   initAudio();
   initBackToTop();
   updatePrayerStats();
+  initRippleEffect();
   setTimeout(() => { renderScriptures(); renderJournal(); }, 100);
   navigate('home');
+  setTimeout(initStaggeredAnimations, 300);
+  setTimeout(initScrollReveal, 500);
 
   // Show native share button on supported devices
   if (navigator.share) {
