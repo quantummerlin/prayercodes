@@ -73,7 +73,7 @@ const CATEGORIES = [
       { key:'need', title:'Present Your Need', icon:'scroll',
         guidance:'Lay your specific need for protection before the Lord. He hears every word.',
         scripture:{text:'The LORD shall preserve thee from all evil: he shall preserve thy soul.',ref:'Psalm 121:7'},
-        placeholder:'Lord, I bring before You [specific need]. I ask for Your covering over my life and my household…'},
+        placeholder:'Lord, I bring before You my need for safety and covering. I ask for Your protection over my life, my household, and all who are dear to me. Guard us from every danger, seen and unseen…'},
       { key:'appeal', title:'Appeal to His Faithfulness', icon:'star',
         guidance:'Recall the faithfulness of God throughout scripture. He who protected Israel protects you.',
         scripture:{text:'The name of the LORD is a strong tower: the righteous runneth into it, and is safe.',ref:'Proverbs 18:10'},
@@ -98,7 +98,7 @@ const CATEGORIES = [
       { key:'specific', title:'Name Your Blessings', icon:'light',
         guidance:'Be specific in your gratitude. Name the blessings, the people, and the mercies you have received.',
         scripture:{text:'Bless the LORD, O my soul, and forget not all his benefits.',ref:'Psalm 103:2'},
-        placeholder:'I thank You for [specific blessings]. Your faithfulness is evident in every area of my life…'},
+        placeholder:'I thank You for every blessing You have poured into my life — for health, for provision, for the people You have placed around me. Your faithfulness is evident in every area of my life…'},
       { key:'gratitude', title:'Declare a Heart of Gratitude', icon:'heart',
         guidance:'Commit to a life of thanksgiving. Declare that gratitude shall be the posture of your heart.',
         scripture:{text:'In every thing give thanks: for this is the will of God.',ref:'1 Thessalonians 5:18'},
@@ -127,7 +127,7 @@ const CATEGORIES = [
       { key:'request', title:'Supplication — Ask Boldly', icon:'scroll',
         guidance:'Present your request with boldness and specificity. The Lord invites you to ask.',
         scripture:{text:'Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you.',ref:'Matthew 7:7'},
-        placeholder:'Lord, I bring before You [your specific request]. I ask in faith, believing I receive…'},
+        placeholder:'Lord, I bring before You the deepest desire of my heart. I ask for Your favour, Your provision, and Your open doors. I ask in faith, believing I receive according to Your perfect will…'},
       { key:'closing', title:'Seal with Faith', icon:'cross',
         guidance:'Close by declaring your faith that the Lord has heard and shall answer according to His will.',
         scripture:{text:'And all things, whatsoever ye shall ask in prayer, believing, ye shall receive.',ref:'Matthew 21:22'},
@@ -144,7 +144,7 @@ const CATEGORIES = [
       { key:'situation', title:'Present Your Situation', icon:'scroll',
         guidance:'Lay your situation before the Lord with honesty. He already knows, but speaking it builds faith.',
         scripture:{text:'Cast thy burden upon the LORD, and he shall sustain thee.',ref:'Psalm 55:22'},
-        placeholder:'Father, I face a decision regarding [situation]. I need Your clear direction and Your peace…'},
+        placeholder:'Father, I face a decision and I need Your clear direction and Your peace. Show me the path You have prepared and give me the courage to walk in it…'},
       { key:'ask_wisdom', title:'Ask for Divine Wisdom', icon:'star',
         guidance:'Ask specifically for wisdom, clarity, and discernment. He gives liberally to all who ask.',
         scripture:{text:'If any of you lack wisdom, let him ask of God, that giveth to all men liberally.',ref:'James 1:5'},
@@ -177,7 +177,7 @@ const CATEGORIES = [
       { key:'request', title:'Request Healing and Restoration', icon:'leaf',
         guidance:'Ask specifically for healing. Name the area of body, mind, or spirit that needs the Lord\'s touch.',
         scripture:{text:'He healeth the broken in heart, and bindeth up their wounds.',ref:'Psalm 147:3'},
-        placeholder:'I ask for complete healing in [specific area]. Restore every cell, every organ, every part of my being…'},
+        placeholder:'I ask for complete healing in my body, my mind, and my spirit. Restore every cell, every organ, every part of my being to the wholeness You designed…'},
       { key:'closing', title:'Declare Wholeness', icon:'cross',
         guidance:'Seal your prayer by declaring wholeness and health over your life in the name of the Lord.',
         scripture:{text:'And the prayer of faith shall save the sick, and the Lord shall raise him up.',ref:'James 5:15'},
@@ -190,7 +190,7 @@ const CATEGORIES = [
       { key:'wrong', title:'Present the Injustice', icon:'scales',
         guidance:'Bring the injustice before the Lord, the righteous Judge. He sees all things and His judgment is true.',
         scripture:{text:'But let judgment run down as waters, and righteousness as a mighty stream.',ref:'Amos 5:24'},
-        placeholder:'Lord, I bring before You the injustice of [situation]. You see all things and Your judgment is righteous…'},
+        placeholder:'Lord, I bring before You the injustice that weighs upon my heart. You see all things and Your judgment is righteous. Let truth be revealed and let Your justice prevail…'},
       { key:'appeal', title:'Appeal to the Righteous Judge', icon:'bolt',
         guidance:'Call upon the Lord\'s righteous character. He is the ultimate Judge who loves justice and hates iniquity.',
         scripture:{text:'For I the LORD love judgment.',ref:'Isaiah 61:8'},
@@ -215,7 +215,7 @@ const CATEGORIES = [
       { key:'identify', title:'Identify the Battle', icon:'search',
         guidance:'Name the spiritual battle you face. Your struggle is not against flesh and blood.',
         scripture:{text:'For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world, against spiritual wickedness in high places.',ref:'Ephesians 6:12'},
-        placeholder:'Lord, I recognise that this battle is not of flesh and blood. I identify the work of the enemy...'},
+        placeholder:'Lord, I recognise that this battle is not of flesh and blood. I identify the work of the enemy in the struggles I face, and I refuse to fight in my own strength...'},
       { key:'armor', title:'Put on the Armor of God', icon:'shield',
         guidance:'Deliberately put on each piece of the armor of God \u2014 truth, righteousness, gospel, faith, salvation, the Word.',
         scripture:{text:'Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.',ref:'Ephesians 6:11'},
@@ -244,11 +244,11 @@ const CATEGORIES = [
       { key:'identify_person', title:'Who You Are Praying For', icon:'hand',
         guidance:'Name the person or people you are interceding for. Bring them before the throne by name.',
         scripture:{text:'And he saw that there was no man, and wondered that there was no intercessor.',ref:'Isaiah 59:16'},
-        placeholder:'Lord, I stand in the gap for those on my heart. I bring them before Your throne of grace by name...'},
+        placeholder:'Lord, I stand in the gap for those on my heart — my family, my friends, and those You have placed in my life. I bring them before Your throne of grace and ask for Your mercy upon them...'},
       { key:'needs', title:'Lift Their Specific Needs', icon:'scroll',
         guidance:'Present their needs with faith. Be specific, earnest, and persistent.',
         scripture:{text:'The effectual fervent prayer of a righteous man availeth much.',ref:'James 5:16'},
-        placeholder:'Lord, I lift up their needs. Where there is sickness, bring healing. Where there is lack, bring provision. Where there is confusion, bring clarity...'},
+        placeholder:'Lord, I lift up their needs before You now. Where there is sickness, bring healing. Where there is lack, bring provision. Where there is confusion, bring clarity. Where there is despair, bring hope...'},
       { key:'protect', title:'Pray Protection Over Them', icon:'shield',
         guidance:'Cover them with the Lord\'s protection \u2014 their lives, families, minds, and spirits.',
         scripture:{text:'The LORD shall preserve thy going out and thy coming in from this time forth, and even for evermore.',ref:'Psalm 121:8'},
@@ -269,7 +269,7 @@ const CATEGORIES = [
       { key:'identify_person', title:'Who You Need to Forgive', icon:'scroll',
         guidance:'Bring before the Lord those who have wronged you. Lay it honestly before the Father.',
         scripture:{text:'For if ye forgive men their trespasses, your heavenly Father will also forgive you.',ref:'Matthew 6:14'},
-        placeholder:'Lord, I bring before You the hurt that was caused. I do not hide it \u2014 I lay it at Your feet...'},
+        placeholder:'Lord, I bring before You the hurt that was caused by those who wronged me. I do not hide it — I lay it at Your feet and trust You to heal what was broken...'},
       { key:'release', title:'Release Bitterness', icon:'flame',
         guidance:'Choose by an act of your will to release all bitterness, anger, and resentment. This is a decision of obedience.',
         scripture:{text:'Let all bitterness, and wrath, and anger, and clamour, and evil speaking, be put away from you, with all malice.',ref:'Ephesians 4:31'},
@@ -973,6 +973,9 @@ function renderStep() {
   document.getElementById('progress-current').textContent = `Step ${state.currentStep + 1} of ${total}`;
   document.getElementById('progress-cat').textContent = cat.name;
 
+  const existingText = state.stepData[step.key] || '';
+  const showOverlay = !existingText;
+
   wrap.innerHTML = `
     <div class="step-wrap">
       <div class="step-header">
@@ -984,17 +987,30 @@ function renderStep() {
         ${step.scripture.text}
         <span class="scripture-ref">— ${step.scripture.ref} (KJV)</span>
       </div>
-      <button class="use-scripture-btn" onclick="useScripture()">${icon('scroll','btn-icon')} Use This Scripture</button>
-      <textarea class="prayer-input" id="step-input"
-        placeholder="${step.placeholder}"
-        rows="4">${state.stepData[step.key] || ''}</textarea>
+      <div class="step-btn-row">
+        <button class="use-scripture-btn" onclick="useScripture()">${icon('scroll','btn-icon')} Use This Scripture</button>
+        <button class="use-scripture-btn use-words-btn" onclick="useTheseWords()">${icon('pray','btn-icon')} Use These Words</button>
+      </div>
+      <div class="prayer-input-wrap">
+        <div class="prayer-overlay${showOverlay ? '' : ' hidden'}" id="step-overlay">${step.placeholder}</div>
+        <textarea class="prayer-input" id="step-input"
+          rows="4">${existingText}</textarea>
+      </div>
       <div class="char-count" id="char-count">0 characters</div>
     </div>
   `;
 
   const input = document.getElementById('step-input');
+  const overlay = document.getElementById('step-overlay');
   const cc = document.getElementById('char-count');
-  input.addEventListener('input', () => { cc.textContent = input.value.length + ' characters'; });
+  input.addEventListener('input', () => {
+    cc.textContent = input.value.length + ' characters';
+    if (input.value.length > 0) {
+      overlay.classList.add('hidden');
+    } else {
+      overlay.classList.remove('hidden');
+    }
+  });
   cc.textContent = input.value.length + ' characters';
 
   const nav = document.getElementById('step-nav');
@@ -1043,6 +1059,16 @@ function useScripture() {
     input.value = prefix + step.scripture.text;
     input.dispatchEvent(new Event('input'));
     toast('Scripture added to your prayer');
+  }
+}
+
+function useTheseWords() {
+  const step = state.selectedCategory.steps[state.currentStep];
+  const input = document.getElementById('step-input');
+  if (input && step.placeholder) {
+    input.value = step.placeholder;
+    input.dispatchEvent(new Event('input'));
+    toast('Example prayer words added — feel free to personalise them');
   }
 }
 
